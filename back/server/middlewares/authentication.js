@@ -14,12 +14,12 @@ let verificaToken = (req, res, next) => {
             return res.status(401).json({
                 ok: false,
                 err: {
-                    message: 'Token no válido'
+                    message: 'Invalid token'
                 }
             });
         }
 
-        req.usuario = decoded.usuario;
+        req.user = decoded.user;
         next();
 
     });
@@ -33,16 +33,16 @@ let verificaToken = (req, res, next) => {
 // =====================
 let verificaAdmin_Role = (req, res, next) => {
 
-    let usuario = req.usuario;
+    let user = req.user;
 
-    if (usuario.role === 'ADMIN_ROLE') {
+    if (user.role === 'USER_ROLE') {
         next();
     } else {
 
         return res.json({
             ok: false,
             err: {
-                message: 'El usuario no es administrador'
+                message: 'Access denied'
             }
         });
     }

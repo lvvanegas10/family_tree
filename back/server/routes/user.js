@@ -1,15 +1,15 @@
 const express = require('express');
-
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
-
 const User = require('../models/user');
 
 const app = express();
 
+const { verificaToken, verificaAdmin_Role } = require('../middlewares/authentication')
 
-app.get('/users', function (req, res) {
+app.get('/users', [verificaToken, verificaAdmin_Role], function (req, res) {
 
+    console.log(req.user.name);
     User.find({}, 'name email role state google img')
         .exec((err, users) => {
 

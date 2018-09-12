@@ -13,6 +13,9 @@ app.use(bodyParser.json())
 
 app.use(require('./routes/index'));
 
+// PRUEBA GOOGLE
+const path = require('path');
+app.use(express.static(path.resolve(__dirname, '../public')));
 
 
 mongoose.connect(process.env.URLDB, (err, res) => {
