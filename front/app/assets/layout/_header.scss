@@ -1,8 +1,12 @@
 // -----------------------------------------------------------------------------
 // This file contains all styles related to the header of the site/application.
 // -----------------------------------------------------------------------------
-header {
-  background-color: rgba($light-grey, 0.9);
+.header {
+  background-color: rgba($dark-black-green, 0.2);
+}
+
+.mainTitle{
+  color: white;
 }
 
 //Navbar
