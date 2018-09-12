@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "start": "node server/server.js",
-        "publishheroku": "cd ../ && git add .",
+        "publishheroku": "cd ../ && git subtree push --prefix back backend-p2 master",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "",
