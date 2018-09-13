@@ -2,7 +2,13 @@
 // This file contains all styles related to the header of the site/application.
 // -----------------------------------------------------------------------------
 header {
-  background-color: rgba($light-grey, 0.9);
+  background-color: rgba($dark-blue, 1);
+  position: relative;
+  z-index: 5;
+}
+
+.mainTitle {
+  color: white;
 }
 
 //Navbar
@@ -18,15 +24,19 @@ header {
   align-items: stretch;
   justify-content: stretch;
   position: relative;
+
   >* {
     flex: 1 auto;
   }
+
   > :first-child {
     flex: 1 1 100%;
   }
+
   > :last-child {
     flex: 1 1 100%;
   }
+
   .brand-logo {
     min-width: 18em;
     margin-bottom: -3em;
@@ -36,22 +46,22 @@ header {
 .navbar-nav {
   list-style: none;
   margin: 0;
-  padding: 1em 0;
   display: flex;
   flex-flow: row;
   align-items: stretch;
   justify-content: space-between;
+
   .nav-item {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
     color: white;
-    padding: 0.4em 0;
+
     >a,
     >span,
     >div>a {
-      padding: 0 2em;
+      padding: 3em 3em;
       height: 100%;
       display: flex;
       justify-content: center;
@@ -62,36 +72,28 @@ header {
       font-weight: 400;
       align-self: center;
       position: relative;
+
       &:after {
         content: "";
-        border-radius: 50%;
-        display: inline-block;
         position: absolute;
-        width: 0;
         bottom: 0;
         left: 0;
         right: 0;
         margin: auto;
         height: 0;
-        background-color: cyan;
-        transition: all 0.2s ease;
+        background-color: white;
+        -webkit-transition: all 0.3s ease;
+        transition: all 0.3s ease;
       }
+
       &.active,
       &:hover,
       &:focus,
       &:active {
-        color: $primary-color;
         &:after {
-          height: 0.4em;
-          width: 0.4em;
+          height: 3px;
         }
       }
-    }
-    &.active,
-    &:hover,
-    &:focus,
-    &:active {
-      background-color: rgba($mid-grey, 0.8);
     }
   }
 }
