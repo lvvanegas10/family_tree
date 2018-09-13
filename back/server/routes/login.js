@@ -93,7 +93,6 @@ app.post('/google', async(req, res) => {
             });
         });
 
-     console.log('aaaaaaaaaaaa', googleUser.email)   
     User.findOne({ email: googleUser.email }, (err, userDB) => {
 
         if (err) {
