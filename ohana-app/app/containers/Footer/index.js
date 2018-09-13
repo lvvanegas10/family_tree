@@ -12,7 +12,11 @@ import { compose } from "redux";
 /* eslint-disable react/prefer-stateless-function */
 export class Footer extends React.Component {
   render() {
-    return <div />;
+    return(
+      <div>
+        <Grid>
+        </ Grid>
+      <div />);
   }
 }
 
