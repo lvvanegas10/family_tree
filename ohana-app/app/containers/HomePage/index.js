@@ -7,7 +7,7 @@
 import React from 'react';
 import { Image } from 'semantic-ui-react';
 
-import Tree from 'containers/Tree';
+import GTree from 'containers/GTree';
 
 import mainImage from 'images/mainImage.jpg';
 
@@ -17,7 +17,7 @@ class HomePage extends React.PureComponent {
     return (
       <div>
         <Image src={mainImage} fluid />
-        <Tree />
+        <GTree />
       </div>
     );
   }

@@ -17,6 +17,8 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
+import LogInPage from 'containers/LogInPage/Loadable';
+import RegisterPage from 'containers/RegisterPage/Loadable';
 import Header from 'containers/Header';
 import Footer from 'containers/Footer';
 
@@ -30,6 +32,7 @@ export default function App() {
             <CSSTransition key={location.key} classNames="fade" timeout={300}>
               <Switch location={location}>
                 <Route exact path="/" component={HomePage} />
+                <Route exact path="/login" component={LogInPage} />
                 <Route component={NotFoundPage} />
               </Switch>
             </CSSTransition>
