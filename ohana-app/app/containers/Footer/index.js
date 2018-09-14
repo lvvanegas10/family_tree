@@ -4,35 +4,24 @@
  *
  */
 
-import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { compose } from "redux";
+import React from 'react';
+import { Container } from 'semantic-ui-react';
 
 /* eslint-disable react/prefer-stateless-function */
-export class Footer extends React.Component {
+class Footer extends React.Component {
   render() {
-    return(
-      <div>
-        <Grid>
-        </ Grid>
-      <div />);
+    return (
+      <footer>
+        <Container>
+          <nav className="navbar foot-nav">
+            <ul className="navbar-nav d-flex justify-content-end">
+              <li className="nav-item"> &copy; 2018 Copyright Ohana</li>
+            </ul>
+          </nav>
+        </Container>
+      </footer>
+    );
   }
 }
 
-Footer.propTypes = {
-  dispatch: PropTypes.func.isRequired
-};
-
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch
-  };
-}
-
-const withConnect = connect(
-  null,
-  mapDispatchToProps
-);
-
-export default compose(withConnect)(Footer);
+export default Footer;

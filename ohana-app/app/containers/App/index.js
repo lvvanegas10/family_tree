@@ -18,6 +18,7 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import Header from 'containers/Header';
+import Footer from 'containers/Footer';
 
 export default function App() {
   return (
@@ -35,6 +36,7 @@ export default function App() {
           </TransitionGroup>
         )}
       />
+      <Footer />
     </div>
   );
 }

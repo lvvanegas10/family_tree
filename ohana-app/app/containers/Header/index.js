@@ -6,7 +6,7 @@
 
 import React from 'react';
 import styled from 'styled-components';
-import { Image, Container, Segment } from 'semantic-ui-react';
+import { Image, Container } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import mainIcon from 'images/main-icon.png';
 
