@@ -58,6 +58,28 @@ module.exports = options => ({
         ],
       },
       {
+        test: /\.less$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          'resolve-url-loader',
+          {
+            loader: 'less-loader',
+            options: {
+              modifyVars: {
+                'font-family': '"Montserrat", "sans-serif"',
+                'primary-color': '#1F7A8C',
+                'link-color': '#1F7A8C',
+                'text-color': '#222222',
+                'btn-primary-color': '#fff',
+              },
+              javascriptEnabled: true,
+              sourceMap: true,
+            },
+          },
+        ],
+      },
+      {
         test: /\.(eot|otf|ttf|woff|woff2)$/,
         use: 'file-loader',
       },

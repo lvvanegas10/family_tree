@@ -17,17 +17,18 @@ import createHistory from 'history/createBrowserHistory';
 import 'sanitize.css/sanitize.css';
 
 /* eslint-disable import/first */
-import '!style-loader!css-loader!resolve-url-loader!sass-loader?sourceMap!./assets/vendor/_normalize.scss';
-/* eslint-enable import/first */
+import './assets/vendor/_normalize.scss';
 
 // Import root app
 import App from 'containers/App';
 
 // Import Language Provider
+/* eslint-disable import/first */
 import LanguageProvider from 'containers/LanguageProvider';
 
 // Import Ant Design Styles
-import '!style-loader!css-loader!resolve-url-loader!sass-loader?sourceMap!./assets/antd.scss';
+import './assets/antd.scss';
+import 'antd/lib/message/style/index.less';
 
 // Import CSS Semantic Styles
 import 'semantic-ui-css/semantic.min.css';
