@@ -1,30 +1,35 @@
-require('./config/config');
+require("./config/config");
 
-const express = require('express');
-const mongoose = require('mongoose');
-
+const express = require("express");
+const mongoose = require("mongoose");
 
 const app = express();
 
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
 
-app.use(bodyParser.json())
+// CORS Express middleware to enable CORS Requests.
+const cors = require("cors");
 
+app.use(bodyParser.json());
 
-app.use(require('./routes/index'));
+app.options("*", cors());
+
+app.use(cors());
+
+app.use(require("./routes/index"));
 
 // PRUEBA GOOGLE
-const path = require('path');
-app.use(express.static(path.resolve(__dirname, '../public')));
+const path = require("path");
+app.use(express.static(path.resolve(__dirname, "../public")));
 
-
-mongoose.connect(process.env.URLDB, (err, res) => {
+mongoose.connect(
+  process.env.URLDB,
+  (err, res) => {
     if (err) throw err;
-    console.log('BD online');
-});
-
-
+    console.log("BD online");
+  }
+);
 
 app.listen(process.env.PORT, () => {
-    console.log('Listening to port: ', process.env.PORT);
+  console.log("Listening to port: ", process.env.PORT);
 });
