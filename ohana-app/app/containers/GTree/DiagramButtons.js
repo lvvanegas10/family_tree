@@ -1,21 +1,32 @@
 import React from 'react';
-import './DiagramButtons.css';
 
-const DiagramButton = ({ onInit, onUpdateColor, onAddNode }) => {
+const DiagramButton = ({ addParents, addWife, addHusband, addChildren }) => {
     return (
         <div className="centered-container">
             <div className="inline-element">
-                <button type="button" onClick={onInit}>
-                    Add father
+                <button type="button" onClick={addParents}>
+                    Add parents
                 </button>
             </div>
-            <div className="inline-element">
-                <button type="button" onClick={onUpdateColor}>
-                    Add Mother
+            <div className="inline-element" onClick={addWife}>
+                <button type="button">
+                    Add wife
                 </button>
             </div>
-            <div className="inline-element" onClick={onAddNode}>
-                <button type="button">Add person</button>
+            <div className="inline-element" onClick={addHusband}>
+                <button type="button">
+                    Add husband
+                </button>
+            </div>
+            <div className="inline-element" onClick={addChildren}>
+                <button type="button">
+                    Add children
+                </button>
+            </div>
+            <div className="inline-element" onClick={addChildren}>
+                <button type="button">
+                    Save tree
+                </button>
             </div>
         </div>
     );

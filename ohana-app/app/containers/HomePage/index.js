@@ -15,16 +15,11 @@ import mainImage from 'images/mainImage.jpg';
 // TREE 
 //============================================================================
 import DiagramButtons from '../GTree/DiagramButtons';
-
+import NodeDetail from '../GTree/NodeDetail';
+import { throws } from 'assert';
 
 var nodeDataArray = [
-  { key: 0, n: "Aaron", s: "M", m: -10, f: -11, ux: 1, a: ["J"], date: "sdasd" },
-  { key: 1, n: "Alice", s: "F", m: -12, f: -13, a: ["H"], date: "sdasd" },
-  { key: 2, n: "Bob", s: "M", m: 1, f: 0, ux: 3, a: ["A"], date: "sdasd" },
-  { key: 3, n: "Barbara", s: "F", a: ["C"] },
-  { key: 4, n: "Bill", s: "M", m: 1, f: 0, ux: 5, a: ["E"] },
-  { key: 5, n: "Brooke", s: "F", a: ["B"] },
-  { key: 6, n: "Claire", s: "F", m: 1, a: ["D"] },
+  { key: 0, n: "You", s: "F", a: ["J"], date: "Thu Sep 28 2018 04:17:36 GMT-0500" }
 ]
 
 /* eslint-disable react/prefer-stateless-function */
@@ -34,17 +29,23 @@ class HomePage extends React.PureComponent {
     super(props);
     this.state = {
       dataT: nodeDataArray,
-      selectedNode: 0
+      selectedNode: 0,
     }
 
 
     //============================================================================
     // TREE 
     //============================================================================
-    this.addFather = this.addFather.bind(this);
-    this.addMother = this.addMother.bind(this);
-    this.handleSelectedNode = this.handleSelectedNode.bind(this);
 
+    this.addParents = this.addParents.bind(this);
+    this.addHusband = this.addHusband.bind(this);
+    this.addWife = this.addWife.bind(this);
+    this.addChildren = this.addChildren.bind(this);
+    this.saveTree = this.saveTree.bind(this);
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleSexChange = this.handleSexChange.bind(this);
+    this.handleDateChange = this.handleDateChange.bind(this);
+    this.handleSelectedNode = this.handleSelectedNode.bind(this);
 
   }
 
@@ -53,18 +54,70 @@ class HomePage extends React.PureComponent {
   // TREE 
   //============================================================================
 
-  addFather() {
+  addParents() {
     let index = nodeDataArray.findIndex((obj => obj.key == this.state.selectedNode));
-    console.log(nodeDataArray[index].name)
-    nodeDataArray[index].f = 0;
+    let keyNew = nodeDataArray[nodeDataArray.length - 1].key + 100
+    nodeDataArray.push({ key: keyNew, n: "Father", s: "M", ux: keyNew + 1 });
+    nodeDataArray.push({ key: keyNew + 1, n: "Mother", s: "F" });
+    nodeDataArray[index].f = keyNew;
+    nodeDataArray[index].m = keyNew + 1;
     this.setState({ dataT: Array.from(nodeDataArray) });
   }
-  addMother() {
-    nodeDataArray.push({ key: 8, n: "Chloe", s: "F", m: 2, f: 3, a: ["E"] });
+
+  addHusband() {
+    let index = nodeDataArray.findIndex((obj => obj.key == this.state.selectedNode));
+    let keyNew = nodeDataArray[nodeDataArray.length - 1].key + 100
+    nodeDataArray.push({ key: keyNew, n: "Husband", s: "M", ux: nodeDataArray[index].key });
+    nodeDataArray[index].vir = keyNew;
     this.setState({ dataT: Array.from(nodeDataArray) });
   }
-  addH() {
-    nodeDataArray.push({ key: 8, n: "Chloe", s: "F", m: 1, f: 0, vir: 9, a: ["E"] });
+  addWife() {
+    let index = nodeDataArray.findIndex((obj => obj.key == this.state.selectedNode));
+    let keyNew = nodeDataArray[nodeDataArray.length - 1].key + 100
+    nodeDataArray.push({ key: keyNew, n: "Wife", s: "F", vir: nodeDataArray[index].key });
+    nodeDataArray[index].ux = keyNew;
+    this.setState({ dataT: Array.from(nodeDataArray) });
+  }
+
+  addChildren() {
+    let index = nodeDataArray.findIndex((obj => obj.key == this.state.selectedNode));
+    let keyNew = nodeDataArray[nodeDataArray.length - 1].key + 100
+
+    console.log(nodeDataArray[index].ux + 'ooooo');
+    console.log(nodeDataArray[index].vir + 'oooo');
+
+    if (nodeDataArray[index].ux !== undefined)
+      nodeDataArray.push({ key: keyNew, n: "Child", s: "F", f: nodeDataArray[index].key, m: nodeDataArray[index].ux });
+    else if (nodeDataArray[index].vir !== undefined)
+      nodeDataArray.push({ key: keyNew, n: "Child", s: "F", m: nodeDataArray[index].key, f: nodeDataArray[index].vir });
+
+    this.setState({ dataT: Array.from(nodeDataArray) });
+  }
+
+  saveTree() {
+
+  }
+
+  getSelectedNode() {
+    let index = nodeDataArray.findIndex((obj => obj.key == this.state.selectedNode));
+    return nodeDataArray[index];
+  }
+
+  handleNameChange(name) {
+    let index = nodeDataArray.findIndex((obj => obj.key == this.state.selectedNode));
+    nodeDataArray[index].n = name;
+    this.setState({ dataT: Array.from(nodeDataArray) });
+  }
+
+  handleSexChange(sex) {
+    let index = nodeDataArray.findIndex((obj => obj.key == this.state.selectedNode));
+    nodeDataArray[index].s = sex;
+    this.setState({ dataT: Array.from(nodeDataArray) });
+  }
+
+  handleDateChange(date) {
+    let index = nodeDataArray.findIndex((obj => obj.key == this.state.selectedNode));
+    nodeDataArray[index].date = date;
     this.setState({ dataT: Array.from(nodeDataArray) });
   }
 
@@ -81,10 +134,18 @@ class HomePage extends React.PureComponent {
 
         <DiagramButtons
           key="diagramButtons"
-          onInit={this.addFather.bind(this)}
-          onUpdateColor={this.addMother.bind(this)}
-          onAddNode={this.addH.bind(this)}
+          addParents={this.addParents.bind(this)}
+          addHusband={this.addHusband.bind(this)}
+          addWife={this.addWife.bind(this)}
+          addChildren={this.addChildren.bind(this)}
+          saveTree={this.saveTree.bind(this)}
         />,
+        <NodeDetail
+          actualNode={nodeDataArray[nodeDataArray.findIndex((obj => obj.key == this.state.selectedNode))]}
+          onNameChange={this.handleNameChange}
+          onSexChange={this.handleSexChange}
+          onDateChange={this.handleDateChange}
+        />
         <GTree data={this.state.dataT} selectedNode={this.handleSelectedNode} />
       </div >
     );
