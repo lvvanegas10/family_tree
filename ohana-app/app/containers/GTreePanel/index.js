@@ -6,13 +6,15 @@
 
 import React, { Component } from 'react';
 import GTree from 'containers/GTree';
-
+import axios from 'axios';
 import DiagramButtons from '../GTree/DiagramButtons';
 import NodeDetail from '../GTree/NodeDetail';
 
 var nodeDataArray = [
   { key: 0, n: "You", s: "F", a: ["#f44336", "#00bcd4", "#ffeb3b", "#8bc34a"], date: "Thu Sep 28 2018 04:17:36 GMT-0500" }
 ]
+
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InJvbGUiOiJVU0VSX1JPTEUiLCJzdGF0ZSI6dHJ1ZSwiZ29vZ2xlIjpmYWxzZSwiX2lkIjoiNWI5ZWJlZWYxY2MxOWIzMTg4NWE3MjRjIiwibmFtZSI6IkxhdXJhIiwiZW1haWwiOiJ2YUBjbyIsIl9fdiI6MH0sImlhdCI6MTUzNzEzMDIzMSwiZXhwIjoxNTM3MTMyODIzfQ.laAUJGOvzP7pUOOb-4cNThDFtuNg33jvDcc2pFwT3xY'
 
 /* eslint-disable react/prefer-stateless-function */
 class GTreePanel extends Component {
@@ -34,7 +36,11 @@ class GTreePanel extends Component {
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleSelectedNode = this.handleSelectedNode.bind(this);
     this.handleColorChange = this.handleColorChange.bind(this);
+    this.loadTree = this.loadTree.bind(this);
+  }
 
+  componentDidMount() {
+    this.loadTree();
   }
 
   addParents() {
@@ -78,7 +84,41 @@ class GTreePanel extends Component {
   }
 
   saveTree() {
+    console.log('Saving...')
+    axios.put('http://localhost:3001/tree',
+      { tree: this.state.dataT },
+      {
+        headers: {
+          "Accept": "application/json",
+          "Content-type": "application/json",
+          "token": token
+        }
+      }
+    )
+      .then(response => console.log(response))
+  }
 
+
+  loadTree() {
+    axios.get('http://localhost:3001/tree',
+      {
+        headers: {
+          "token": token
+        }
+      }
+    )
+      .then(response => {
+        console.log(response.data.trees[0].tree);
+        if (response.data.trees[0].tree.length > 0) {
+          console.log('You have already a Tree');
+          this.setState({ dataT: response.data.trees[0].tree });
+        }
+        else {
+          console.log('new Tree');
+
+          this.setState({ dataT: nodeDataArray });
+        }
+      });
   }
 
   getSelectedNode() {

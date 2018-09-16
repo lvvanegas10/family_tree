@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DiagramButton = ({ addParents, addWife, addHusband, addChildren }) => {
+const DiagramButton = ({ addParents, addWife, addHusband, addChildren, saveTree }) => {
     return (
         <div className="centered-container">
             <div className="inline-element">
@@ -23,7 +23,7 @@ const DiagramButton = ({ addParents, addWife, addHusband, addChildren }) => {
                     Add children
                 </button>
             </div>
-            <div className="inline-element" onClick={addChildren}>
+            <div className="inline-element" onClick={saveTree}>
                 <button type="button">
                     Save tree
                 </button>

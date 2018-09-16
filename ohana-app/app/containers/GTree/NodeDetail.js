@@ -12,8 +12,6 @@ class NodeDetail extends Component {
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleSexChange = this.handleSexChange.bind(this);
         this.handleColorChange = this.handleColorChange.bind(this);
-
-        this.nameInput = React.createRef();
     }
 
     handleDateChange(date) {
@@ -64,7 +62,7 @@ class NodeDetail extends Component {
         return (
             <div>
                 <form>
-                    <input type="text" ref={this.nameInput} value={this.props.actualNode.n} onChange={this.handleNameChange} />
+                    <input type="text" value={this.props.actualNode.n} onChange={this.handleNameChange} />
                     <select onChange={this.handleSexChange} defaultValue={this.props.actualNode.s}>
                         <option value="M">Male</option>
                         <option value="F">Female</option>
