@@ -13,6 +13,9 @@ const client = new OAuth2Client(CL_ID);
 
 app.post('/login', (req, res) => {
 
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+
     let body = req.body;
 
     User.findOne({ email: body.email }, (err, userDB) => {
@@ -82,6 +85,9 @@ async function verify(token) {
 
 
 app.post('/google', async(req, res) => {
+
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
     let token = req.body.idtoken;
 

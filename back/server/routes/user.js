@@ -9,6 +9,9 @@ const { verificaToken, verificaAdmin_Role } = require('../middlewares/authentica
 
 app.get('/users', [verificaToken, verificaAdmin_Role], function (req, res) {
 
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+
     console.log(req.user.name);
     User.find({}, 'name email role state google img')
         .exec((err, users) => {
@@ -65,6 +68,8 @@ app.get('/users/:id', function (req, res) {
 
 app.post('/users', function (req, res) {
 
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     let body = req.body;
 
     let user = new User({
@@ -90,6 +95,9 @@ app.post('/users', function (req, res) {
 });
 
 app.put('/users/:id', function (req, res) {
+
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
     let id = req.params.id;
     let body = _.pick(req.body, ['name', 'email', 'img', 'role', 'state']);
@@ -123,6 +131,9 @@ app.put('/users/:id', function (req, res) {
 
 app.delete('/users/:id', function (req, res) {
 
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    
     let id = req.params.id;
 
     let changeState = {

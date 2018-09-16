@@ -22,13 +22,13 @@ app.use(require("./routes/index"));
 const path = require("path");
 app.use(express.static(path.resolve(__dirname, "../public")));
 
-mongoose.connect(
-  process.env.URLDB,
-  (err, res) => {
-    if (err) throw err;
-    console.log("BD online");
-  }
-);
+mongoose.set('useCreateIndex', true);
+ const mongo = mongoose.connect(process.env.URLDB, { useNewUrlParser: true });
+mongo.then(() => {
+  console.log('connected');
+}).catch((err) => {
+  console.log('err', err);
+});
 
 app.listen(process.env.PORT, () => {
   console.log("Listening to port: ", process.env.PORT);
