@@ -138,7 +138,7 @@ class GTreePanel extends Component {
     console.log('Saving...');
     axios
       .put(
-        'http://localhost:3001/tree',
+        'https://back-p2.herokuapp.com/tree',
         { tree: this.state.dataT },
         {
           headers: {
@@ -153,7 +153,7 @@ class GTreePanel extends Component {
 
   loadTree() {
     axios
-      .get('http://localhost:3001/tree', {
+      .get('https://back-p2.herokuapp.com/tree', {
         headers: {
           token,
         },
