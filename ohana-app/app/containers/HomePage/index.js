@@ -55,6 +55,7 @@ class HomePage extends React.PureComponent {
 
   addFather() {
     let index = nodeDataArray.findIndex((obj => obj.key == this.state.selectedNode));
+    console.log(nodeDataArray[index].name)
     nodeDataArray[index].f = 0;
     this.setState({ dataT: Array.from(nodeDataArray) });
   }
