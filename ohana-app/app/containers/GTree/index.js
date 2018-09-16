@@ -2,13 +2,27 @@ import React, { Component } from 'react';
 import go from 'gojs';
 const goObj = go.GraphObject.make;
 
+const nodeDataArray = [
+  { key: 0, n: "Aaron", s: "M", m: -10, f: -11, ux: 1, a: ["J"], date: "sdasd" },
+  { key: 1, n: "Alice", s: "F", m: -12, f: -13, a: ["H"], date: "sdasd" },
+  { key: 2, n: "Bob", s: "M", m: 1, f: 0, ux: 3, a: ["A"], date: "sdasd" },
+  { key: 3, n: "Barbara", s: "F", a: ["C"] },
+  { key: 4, n: "Bill", s: "M", m: 1, f: 0, ux: 5, a: ["E"] },
+  { key: 5, n: "Brooke", s: "F", a: ["B"] },
+  { key: 6, n: "Claire", s: "F", m: 1, f: 0, a: ["D"] },
+]
+
 export default class GTree extends Component {
   constructor(props) {
     super(props);
 
     this.renderCanvas = this.renderCanvas.bind(this);
-    // this.init = this.init.bind(this);
-    this.state = { myModel: null, myDiagram: null }
+    this.handleSelectedNode = this.handleSelectedNode.bind(this);
+    this.state = {
+      data: nodeDataArray,
+      myModel: null,
+      myDiagram: null
+    }
   }
 
   renderCanvas() {
@@ -266,7 +280,7 @@ export default class GTree extends Component {
         nodeSelectionAdornmentTemplate:
           goObj(go.Adornment, "Auto",
             { layerName: "Grid" },  // the predefined layer that is behind everything else
-            goObj(go.Shape, "Circle", { fill: "yellow", stroke: null }),
+            goObj(go.Shape, "Circle", { fill: "cyan", stroke: null }),
             goObj(go.Placeholder)
           ),
         layout:  // use a custom layout, defined below
@@ -348,11 +362,14 @@ export default class GTree extends Component {
     // named by the category value in the node data object
     diagram.nodeTemplateMap.add("M",  // male
       goObj(go.Node, "Vertical",
+        {
+          selectionChanged: node => this.handleSelectedNode(node.key)
+        },
         { locationSpot: go.Spot.Center, locationObjectName: "ICON" },
         goObj(go.Panel,
           { name: "ICON" },
           goObj(go.Shape, "Square",
-            { width: 40, height: 40, strokeWidth: 2, fill: "white", portId: "" }),
+            { width: 40, height: 40, strokeWidth: 1, fill: "white", portId: "" }),
           goObj(go.Panel,
             { // for each attribute show a Shape at a particular place in the overall square
               itemTemplate:
@@ -372,13 +389,16 @@ export default class GTree extends Component {
           new go.Binding("text", "n"))
       ));
 
-    diagram.nodeTemplateMap.add("F",  // female
+    diagram.nodeTemplateMap.add("F",  // female      
       goObj(go.Node, "Vertical",
+        {
+          selectionChanged: node => this.handleSelectedNode(node.key)
+        },
         { locationSpot: go.Spot.Center, locationObjectName: "ICON" },
         goObj(go.Panel,
           { name: "ICON" },
           goObj(go.Shape, "Circle",
-            { width: 40, height: 40, strokeWidth: 2, fill: "white", portId: "" }),
+            { width: 40, height: 40, strokeWidth: 1, fill: "white", portId: "" }),
           goObj(go.Panel,
             { // for each attribute show a Shape at a particular place in the overall circle
               itemTemplate:
@@ -416,7 +436,7 @@ export default class GTree extends Component {
     diagram.linkTemplateMap.add("Marriage",  // for marriage relationships
       goObj(go.Link,
         { selectable: false },
-        goObj(go.Shape, { strokeWidth: 2, stroke: "blue" })
+        goObj(go.Shape, { strokeWidth: 2, stroke: "gray" })
       ));
 
     this.setState({ myModel: model, myDiagram: diagram },
@@ -436,8 +456,7 @@ export default class GTree extends Component {
   componentWillUpdate(prevProps) {
     if (this.props.data !== prevProps.data) {
       console.log('Updating');
-      console.log(this.props.data);
-      console.log(this.prevProps);
+      console.log(this.state.myDiagram.model.nodeDataArray);
 
       const model = this.state.myModel;
       const diagram = this.state.myDiagram;
@@ -566,6 +585,10 @@ export default class GTree extends Component {
         model.addLinkData(cdata);
       }
     }
+  }
+
+  handleSelectedNode(node) {
+    this.props.selectedNode(node);
   }
 
 

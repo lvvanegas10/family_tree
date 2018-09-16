@@ -6,16 +6,16 @@ const DiagramButton = ({ onInit, onUpdateColor, onAddNode }) => {
         <div className="centered-container">
             <div className="inline-element">
                 <button type="button" onClick={onInit}>
-                    Init diagram
+                    Add father
                 </button>
             </div>
             <div className="inline-element">
                 <button type="button" onClick={onUpdateColor}>
-                    Update node color
+                    Add Mother
                 </button>
             </div>
             <div className="inline-element" onClick={onAddNode}>
-                <button type="button">Add node with selected node(s) as parent(s)</button>
+                <button type="button">Add person</button>
             </div>
         </div>
     );
