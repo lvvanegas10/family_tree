@@ -162,6 +162,7 @@
     "minimist": "1.2.0",
     "prop-types": "15.6.2",
     "react": "16.5.0",
+    "react-color": "^2.14.1",
     "react-d3-tree": "^1.11.0",
     "react-datepicker": "^1.6.0",
     "react-dom": "16.5.0",

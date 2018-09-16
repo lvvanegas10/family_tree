@@ -46,6 +46,7 @@ class HomePage extends React.PureComponent {
     this.handleSexChange = this.handleSexChange.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleSelectedNode = this.handleSelectedNode.bind(this);
+    this.handleColorChange = this.handleColorChange.bind(this);
 
   }
 
@@ -121,6 +122,12 @@ class HomePage extends React.PureComponent {
     this.setState({ dataT: Array.from(nodeDataArray) });
   }
 
+  handleColorChange(color) {
+    let index = nodeDataArray.findIndex((obj => obj.key == this.state.selectedNode));
+    nodeDataArray[index].a = [color];
+    this.setState({ dataT: Array.from(nodeDataArray) });
+  }
+
   handleSelectedNode(node) {
     this.setState({ selectedNode: node });
   }
@@ -145,6 +152,7 @@ class HomePage extends React.PureComponent {
           onNameChange={this.handleNameChange}
           onSexChange={this.handleSexChange}
           onDateChange={this.handleDateChange}
+          onColorChange={this.handleColorChange}
         />
         <GTree data={this.state.dataT} selectedNode={this.handleSelectedNode} />
       </div >

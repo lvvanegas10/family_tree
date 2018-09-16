@@ -290,19 +290,24 @@ export default class GTree extends Component {
     // determine the color for each attribute shape
     function attrFill(a) {
       switch (a) {
-        case "A": return "green";
-        case "B": return "orange";
-        case "C": return "red";
-        case "D": return "cyan";
-        case "E": return "gold";
-        case "F": return "pink";
-        case "G": return "blue";
-        case "H": return "brown";
-        case "I": return "purple";
-        case "J": return "chartreuse";
-        case "K": return "lightgray";
-        case "L": return "magenta";
-        case "S": return "red";
+        case "#f44336": return "#f44336";
+        case "#e91e63": return "#e91e63";
+        case "#9c27b0": return "#9c27b0";
+        case "#673ab7": return "#673ab7";
+        case "#3f51b5": return "#3f51b5";
+        case "#2196f3": return "#2196f3";
+        case "#03a9f4": return "#03a9f4";
+        case "#00bcd4": return "#00bcd4";
+        case "#009688": return "#009688";
+        case "#4caf50": return "#4caf50";
+        case "#8bc34a": return "#8bc34a";
+        case "#cddc39": return "#cddc39";
+        case "#ffeb3b": return "#ffeb3b";
+        case "#ffc107": return "#ffc107";
+        case "#ff9800": return "#ff9800";
+        case "#ff5722": return "#ff5722";
+        case "#795548": return "#795548";
+        case "#607d8b": return "#607d8b";
         default: return "transparent";
       }
     }
