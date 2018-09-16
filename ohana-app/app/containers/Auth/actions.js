@@ -3,28 +3,43 @@
  * Auth actions
  *
  */
-import axios from 'axios';
+
 import { SET_USER_DATA, LOADING_USER_DATA, USER_LOGOUT } from './constants';
 
-export const loginUser = (email, password) => async dispatch => {
-  dispatch({ type: LOADING_USER_DATA });
-  try {
-    const { data } = await axios.post(
-      'https://back-p2.herokuapp.com/login',
-      {
-        email,
-        password,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      },
-    );
-    console.log(data);
-    return true;
-  } catch (error) {
-    console.log(error);
-    return false;
+export const authStart = () => ({
+  type: LOADING_USER_DATA,
+});
+
+export const authSuccess = (token, userData) => ({
+  type: SET_USER_DATA,
+  payload: {
+    token,
+    userData,
+  },
+});
+
+export const authFail = () => ({
+  type: USER_LOGOUT,
+});
+
+export const logout = () => {
+  localStorage.removeItem('token');
+  localStorage.removeItem('expirationTime');
+  return {
+    type: USER_LOGOUT,
+  };
+};
+
+export const checkSession = () => dispatch => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    dispatch(logout());
+  } else {
+    const expirationTime = new Date(localStorage.getItem('expirationTime'));
+    if (expirationTime > new Date()) {
+      dispatch(authSuccess(token, expirationTime));
+    } else {
+      dispatch(logout());
+    }
   }
 };

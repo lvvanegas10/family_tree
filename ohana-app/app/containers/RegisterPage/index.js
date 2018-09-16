@@ -6,29 +6,21 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
+import { Redirect } from 'react-router-dom';
+
+// Components
+import SignUpForm from './SignUpForm';
 
 /* eslint-disable react/prefer-stateless-function */
-export class RegisterPage extends React.Component {
-  render() {
-    return <div />;
+const RegisterPage = ({ isAuthenticated }) => {
+  if (isAuthenticated) {
+    return <Redirect to="/" />;
   }
-}
-
-RegisterPage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  return <SignUpForm />;
 };
 
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch,
-  };
-}
+RegisterPage.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired,
+};
 
-const withConnect = connect(
-  null,
-  mapDispatchToProps,
-);
-
-export default compose(withConnect)(RegisterPage);
+export default RegisterPage;
