@@ -35,6 +35,9 @@ app.get('/users', [verificaToken, verificaAdmin_Role], function (req, res) {
 
 app.get('/users/:id', function (req, res) {
 
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    
     let id = req.params.id;
 
     User.find({ _id: id }, 'name email role state google img')
@@ -133,7 +136,7 @@ app.delete('/users/:id', function (req, res) {
 
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    
+
     let id = req.params.id;
 
     let changeState = {
