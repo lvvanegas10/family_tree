@@ -7,14 +7,11 @@
 import React, { Component } from 'react';
 import GTree from 'containers/GTree';
 
-//============================================================================
-// TREE 
-//============================================================================
 import DiagramButtons from '../GTree/DiagramButtons';
 import NodeDetail from '../GTree/NodeDetail';
 
 var nodeDataArray = [
-  { key: 0, n: "You", s: "F", a: ["J"], date: "Thu Sep 28 2018 04:17:36 GMT-0500" }
+  { key: 0, n: "You", s: "F", a: ["#f44336", "#00bcd4", "#ffeb3b", "#8bc34a"], date: "Thu Sep 28 2018 04:17:36 GMT-0500" }
 ]
 
 /* eslint-disable react/prefer-stateless-function */
@@ -26,11 +23,6 @@ class GTreePanel extends Component {
       dataT: nodeDataArray,
       selectedNode: 0,
     }
-
-
-    //============================================================================
-    // TREE 
-    //============================================================================
 
     this.addParents = this.addParents.bind(this);
     this.addHusband = this.addHusband.bind(this);
@@ -45,16 +37,11 @@ class GTreePanel extends Component {
 
   }
 
-
-  //============================================================================
-  // TREE 
-  //============================================================================
-
   addParents() {
     let index = nodeDataArray.findIndex((obj => obj.key == this.state.selectedNode));
     let keyNew = nodeDataArray[nodeDataArray.length - 1].key + 100
-    nodeDataArray.push({ key: keyNew, n: "Father", s: "M", ux: keyNew + 1 });
-    nodeDataArray.push({ key: keyNew + 1, n: "Mother", s: "F" });
+    nodeDataArray.push({ key: keyNew, n: "Father", s: "M", ux: keyNew + 1, date: "Thu Sep 28 2018 04:17:36 GMT-0500" });
+    nodeDataArray.push({ key: keyNew + 1, n: "Mother", s: "F", date: "Thu Sep 28 2018 04:17:36 GMT-0500" });
     nodeDataArray[index].f = keyNew;
     nodeDataArray[index].m = keyNew + 1;
     this.setState({ dataT: Array.from(nodeDataArray) });
@@ -63,14 +50,14 @@ class GTreePanel extends Component {
   addHusband() {
     let index = nodeDataArray.findIndex((obj => obj.key == this.state.selectedNode));
     let keyNew = nodeDataArray[nodeDataArray.length - 1].key + 100
-    nodeDataArray.push({ key: keyNew, n: "Husband", s: "M", ux: nodeDataArray[index].key });
+    nodeDataArray.push({ key: keyNew, n: "Husband", s: "M", ux: nodeDataArray[index].key, date: "Thu Sep 28 2018 04:17:36 GMT-0500" });
     nodeDataArray[index].vir = keyNew;
     this.setState({ dataT: Array.from(nodeDataArray) });
   }
   addWife() {
     let index = nodeDataArray.findIndex((obj => obj.key == this.state.selectedNode));
     let keyNew = nodeDataArray[nodeDataArray.length - 1].key + 100
-    nodeDataArray.push({ key: keyNew, n: "Wife", s: "F", vir: nodeDataArray[index].key });
+    nodeDataArray.push({ key: keyNew, n: "Wife", s: "F", vir: nodeDataArray[index].key, date: "Thu Sep 28 2018 04:17:36 GMT-0500" });
     nodeDataArray[index].ux = keyNew;
     this.setState({ dataT: Array.from(nodeDataArray) });
   }
@@ -83,9 +70,9 @@ class GTreePanel extends Component {
     console.log(nodeDataArray[index].vir + 'oooo');
 
     if (nodeDataArray[index].ux !== undefined)
-      nodeDataArray.push({ key: keyNew, n: "Child", s: "F", f: nodeDataArray[index].key, m: nodeDataArray[index].ux });
+      nodeDataArray.push({ key: keyNew, n: "Child", s: "F", f: nodeDataArray[index].key, m: nodeDataArray[index].ux, date: "Thu Sep 28 2018 04:17:36 GMT-0500" });
     else if (nodeDataArray[index].vir !== undefined)
-      nodeDataArray.push({ key: keyNew, n: "Child", s: "F", m: nodeDataArray[index].key, f: nodeDataArray[index].vir });
+      nodeDataArray.push({ key: keyNew, n: "Child", s: "F", m: nodeDataArray[index].key, f: nodeDataArray[index].vir, date: "Thu Sep 28 2018 04:17:36 GMT-0500" });
 
     this.setState({ dataT: Array.from(nodeDataArray) });
   }
@@ -126,7 +113,6 @@ class GTreePanel extends Component {
   handleSelectedNode(node) {
     this.setState({ selectedNode: node });
   }
-  //============================================================================
 
   render() {
 
@@ -151,8 +137,6 @@ class GTreePanel extends Component {
       </div >
     );
   }
-
-
 }
 
 export default GTreePanel;
