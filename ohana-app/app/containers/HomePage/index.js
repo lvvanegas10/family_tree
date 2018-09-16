@@ -1,14 +1,8 @@
-/**
- *
- * HomePage
- *
- */
-
 import React from 'react';
 import { Image } from 'semantic-ui-react';
 
 import mainImage from 'images/mainImage.jpg';
-import GTreePanel from '../GTreePanel/index'
+import GTreePanel from 'containers/GTreePanel'
 
 /* eslint-disable react/prefer-stateless-function */
 class HomePage extends React.PureComponent {
@@ -19,7 +13,6 @@ class HomePage extends React.PureComponent {
 
 
   render() {
-
     return (
       < div >
         <Image src={mainImage} fluid />
