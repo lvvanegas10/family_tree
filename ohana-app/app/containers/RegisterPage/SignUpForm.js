@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 
 import background from 'images/login-background.jpg';
@@ -13,17 +12,15 @@ import Icon from 'antd/lib/icon';
 import Input from 'antd/lib/input';
 import Button from 'antd/lib/button';
 import message from 'antd/lib/message';
+import notification from 'antd/lib/notification';
 import 'antd/lib/form/style/index.less';
 import 'antd/lib/input/style/index.less';
 import 'antd/lib/button/style/index.less';
 import 'antd/lib/spin/style/index.less';
+import 'antd/lib/notification/style/index.less';
 
 // Semantic
 import { Header } from 'semantic-ui-react';
-import { Auth } from '../Auth';
-
-// Redux
-import { authSuccess } from '../Auth/actions';
 
 const FormItem = Form.Item;
 
@@ -31,36 +28,35 @@ const WrapperLogin = styled.div`
   background-image: url(${background});
 `;
 
-class LoginPage extends Component {
+class SignUpForm extends Component {
   static propTypes = {
     form: PropTypes.object,
     getFieldDecorator: PropTypes.func,
-    isAuthenticated: PropTypes.bool.isRequired,
-    authSuccess: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired,
   };
 
   state = { loading: false };
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.form.validateFields(async (err, { email, password }) => {
+    this.props.form.validateFields(async (err, { name, email, password }) => {
       if (!err) {
-        this.loginUser(email, password);
+        this.signUpUser(name, email, password);
       }
     });
   };
 
-  loginUser = async (email, password) => {
-    const loading = message.loading('Sign in...', 0);
+  signUpUser = async (name, email, password) => {
+    const loading = message.loading('Processing data...', 0);
     this.setState({ loading: true });
     try {
-      const {
-        data: { token, user },
-      } = await axios.post(
-        'https://back-p2.herokuapp.com/login',
+      await axios.post(
+        'https://back-p2.herokuapp.com/users',
         {
+          name,
           email,
           password,
+          role: 'USER_ROLE',
         },
         {
           headers: {
@@ -68,13 +64,13 @@ class LoginPage extends Component {
           },
         },
       );
-      const expirationTime = new Date(Date.now());
-      expirationTime.setMinutes(expirationTime.getMinutes() + 5);
-      localStorage.setItem('token', token);
-      localStorage.setItem('expirationTime', expirationTime);
-      this.props.authSuccess(token, user);
+      this.props.history.push('/login');
+      notification.success({
+        message: 'Registration complete',
+        description: 'You can login now!',
+        placement: 'bottomRight',
+      });
     } catch (error) {
-      message.error('Incorrect user or password. Please try again.', 4);
       this.setState({ loading: false });
     } finally {
       loading();
@@ -82,19 +78,32 @@ class LoginPage extends Component {
   };
 
   render() {
-    const { isAuthenticated } = this.props;
     const { getFieldDecorator } = this.props.form;
     const { loading } = this.state;
-    if (isAuthenticated) {
-      return <Redirect to="/" />;
-    }
     return (
       <div className="login-page">
         <WrapperLogin className="wrap-login">
           <Form onSubmit={this.handleSubmit} className="login-form">
             <Header as="h1" textAlign="center">
-              Enter to your account
+              Sign Up
             </Header>
+            <FormItem>
+              {getFieldDecorator('name', {
+                rules: [
+                  {
+                    required: true,
+                    message: 'Please introduce your full name',
+                  },
+                ],
+              })(
+                <Input
+                  prefix={
+                    <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
+                  }
+                  placeholder="Full name"
+                />,
+              )}
+            </FormItem>
             <FormItem>
               {getFieldDecorator('email', {
                 rules: [
@@ -138,7 +147,7 @@ class LoginPage extends Component {
                 className="login-form-button"
                 block
               >
-                Log In
+                Sign Up
               </Button>
             </FormItem>
           </Form>
@@ -148,11 +157,4 @@ class LoginPage extends Component {
   }
 }
 
-const mapDispatchToProps = {
-  authSuccess,
-};
-
-export default connect(
-  null,
-  mapDispatchToProps,
-)(Auth(Form.create()(LoginPage)));
+export default withRouter(Form.create()(SignUpForm));

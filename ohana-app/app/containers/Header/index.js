@@ -5,9 +5,14 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { Link, withRouter } from 'react-router-dom';
+
+// Semantic
 import { Image, Container } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+
+// Images
 import mainIcon from 'images/main-icon.png';
 
 // Components
@@ -24,6 +29,16 @@ const Logo = styled.div`
 
 /* eslint-disable react/prefer-stateless-function */
 export class Header extends React.Component {
+  static propTypes = {
+    location: PropTypes.object.isRequired,
+  };
+
+  componentDidUpdate = prevProps => {
+    if (this.props.location.pathname !== prevProps.location.pathname) {
+      window.scrollTo(0, 0);
+    }
+  };
+
   render() {
     return (
       <header>
@@ -40,4 +55,4 @@ export class Header extends React.Component {
   }
 }
 
-export default Header;
+export default withRouter(Header);

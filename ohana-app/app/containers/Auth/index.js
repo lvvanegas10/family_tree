@@ -5,5 +5,6 @@
  */
 
 import Auth from './Auth';
+import Logout from './Logout';
 
-export { Auth };
+export { Auth, Logout };

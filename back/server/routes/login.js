@@ -7,14 +7,11 @@ const app = express();
 
 const CL_ID = '737491737196-blinmg8mvr94vop8doak9sq6v2u9gglq.apps.googleusercontent.com';
 
-const { OAuth2Client } = require('google-auth-library');
+const {OAuth2Client} = require('google-auth-library');
 const client = new OAuth2Client(CL_ID);
 
 
 app.post('/login', (req, res) => {
-
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
     let body = req.body;
 
@@ -73,7 +70,7 @@ async function verify(token) {
     });
 
     const payload = ticket.getPayload();
-
+    
 
     return {
         name: payload.name,
@@ -84,10 +81,7 @@ async function verify(token) {
 }
 
 
-app.post('/google', async (req, res) => {
-
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+app.post('/google', async(req, res) => {
 
     let token = req.body.idtoken;
 

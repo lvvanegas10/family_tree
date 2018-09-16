@@ -1,21 +1,47 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { NavLink, withRouter } from 'react-router-dom';
 
-const MainNavBar = () => (
+// Components
+import { Auth } from '../Auth';
+
+const MainNavBar = ({ isAuthenticated }) => (
   <nav className="navbar main-nav no-margin">
     <ul className="navbar-nav d-flex justify-content-end align-items-stretch">
-      <li className="nav-item">
-        <NavLink to="/login" activeClassName="active">
-          Log In
-        </NavLink>
-      </li>
-      <li className="nav-item">
-        <NavLink to="/logout" activeClassName="active">
-          Sign Up
-        </NavLink>
-      </li>
+      {!isAuthenticated && (
+        <li className="nav-item">
+          <NavLink to="/login" activeClassName="active">
+            Log In
+          </NavLink>
+        </li>
+      )}
+      {!isAuthenticated && (
+        <li className="nav-item">
+          <NavLink to="/signup" activeClassName="active">
+            Sign Up
+          </NavLink>
+        </li>
+      )}
+      {isAuthenticated && (
+        <li className="nav-item">
+          <NavLink to="/my-tree" activeClassName="active">
+            My Family Tree
+          </NavLink>
+        </li>
+      )}
+      {isAuthenticated && (
+        <li className="nav-item">
+          <NavLink to="/logout" activeClassName="active">
+            Logout
+          </NavLink>
+        </li>
+      )}
     </ul>
   </nav>
 );
 
-export default MainNavBar;
+MainNavBar.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired,
+};
+
+export default withRouter(Auth(MainNavBar));

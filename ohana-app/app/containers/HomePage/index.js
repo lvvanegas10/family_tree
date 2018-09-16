@@ -1,27 +1,26 @@
+/**
+ *
+ * HomePage
+ *
+ */
+
 import React from 'react';
 import { Image } from 'semantic-ui-react';
 
+import GTree from 'containers/GTree';
+
 import mainImage from 'images/mainImage.jpg';
-import GTreePanel from 'containers/GTreePanel'
 
 /* eslint-disable react/prefer-stateless-function */
 class HomePage extends React.PureComponent {
-
-  constructor(props) {
-    super(props);
-  }
-
-
   render() {
     return (
-      < div >
+      <div>
         <Image src={mainImage} fluid />
-        <GTreePanel />
-      </div >
+        <GTree />
+      </div>
     );
   }
-
-
 }
 
 export default HomePage;

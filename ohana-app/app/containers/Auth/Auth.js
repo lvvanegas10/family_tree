@@ -8,21 +8,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
 import Loader from 'components/Loader';
 
-import injectReducer from 'utils/injectReducer';
 import { makeSelectUserData } from './selectors';
-import { userDataReducer } from './reducer';
 
-const User = ChildrenView => {
-  class UserComponent extends React.PureComponent {
+/* eslint-disable react/prefer-stateless-function */
+const Auth = ChildrenView => {
+  class UserComponent extends React.Component {
     static propTypes = {
       userData: PropTypes.object.isRequired,
     };
 
     render() {
       const { userData } = this.props;
+      if (userData.status === 'PENDING') {
+        return <Loader />;
+      }
       return (
         <ChildrenView
           {...this.props}
@@ -36,17 +37,7 @@ const User = ChildrenView => {
     userData: makeSelectUserData(),
   });
 
-  const withConnect = connect(mapStateToProps);
-
-  const withReducer = injectReducer({
-    key: 'userData',
-    reducer: userDataReducer,
-  });
-
-  return compose(
-    withReducer,
-    withConnect,
-  )(UserComponent);
+  return connect(mapStateToProps)(UserComponent);
 };
 
-export default User;
+export default Auth;
