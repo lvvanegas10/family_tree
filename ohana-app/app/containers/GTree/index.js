@@ -321,20 +321,25 @@ export default class GTree extends Component {
     var slash = go.Geometry.parse("F M38 0 L40 0 40 2 2 40 0 40 0 38z");
     function maleGeometry(a) {
       switch (a) {
-        case "A": return tlsq;
-        case "B": return tlsq;
-        case "C": return tlsq;
-        case "D": return trsq;
-        case "E": return trsq;
-        case "F": return trsq;
-        case "G": return brsq;
-        case "H": return brsq;
-        case "I": return brsq;
-        case "J": return blsq;
-        case "K": return blsq;
-        case "L": return blsq;
-        case "S": return slash;
-        default: return tlsq;
+        case "#f44336": return tlsq;
+        case "#e91e63": return tlsq;
+        case "#9c27b0": return tlsq;
+        case "#673ab7": return tlsq;
+        case "#3f51b5": return trsq;
+        case "#2196f3": return trsq;
+        case "#03a9f4": return trsq;
+        case "#00bcd4": return trsq;
+        case "#009688": return brsq;
+        case "#4caf50": return brsq;
+        case "#8bc34a": return brsq;
+        case "#cddc39": return brsq;
+        case "#ffeb3b": return blsq;
+        case "#ffc107": return blsq;
+        case "#ff9800": return blsq;
+        case "#ff5722": return blsq;
+        case "#795548": return blsq;
+        case "#607d8b": return blsq;
+        default: return slash;
       }
     }
 
@@ -346,20 +351,25 @@ export default class GTree extends Component {
     var blarc = go.Geometry.parse("F M20 20 B 90 90 20 20 19 19 z");
     function femaleGeometry(a) {
       switch (a) {
-        case "A": return tlarc;
-        case "B": return tlarc;
-        case "C": return tlarc;
-        case "D": return trarc;
-        case "E": return trarc;
-        case "F": return trarc;
-        case "G": return brarc;
-        case "H": return brarc;
-        case "I": return brarc;
-        case "J": return blarc;
-        case "K": return blarc;
-        case "L": return blarc;
-        case "S": return slash;
-        default: return tlarc;
+        case "#f44336": return tlarc;
+        case "#e91e63": return tlarc;
+        case "#9c27b0": return tlarc;
+        case "#673ab7": return tlarc;
+        case "#3f51b5": return trarc;
+        case "#2196f3": return trarc;
+        case "#03a9f4": return trarc;
+        case "#00bcd4": return trarc;
+        case "#009688": return brarc;
+        case "#4caf50": return brarc;
+        case "#8bc34a": return brarc;
+        case "#cddc39": return brarc;
+        case "#ffeb3b": return blarc;
+        case "#ffc107": return blarc;
+        case "#ff9800": return blarc;
+        case "#ff5722": return blarc;
+        case "#795548": return blarc;
+        case "#607d8b": return blarc;
+        default: return slash;
       }
     }
 
