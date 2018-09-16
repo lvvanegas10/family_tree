@@ -18,7 +18,7 @@ var nodeDataArray = [
 ]
 
 /* eslint-disable react/prefer-stateless-function */
-class GTreePanel extends React.PureComponent {
+class GTreePanel extends Component {
 
   constructor(props) {
     super(props);
@@ -139,7 +139,7 @@ class GTreePanel extends React.PureComponent {
           addWife={this.addWife.bind(this)}
           addChildren={this.addChildren.bind(this)}
           saveTree={this.saveTree.bind(this)}
-        />,
+        />
         <NodeDetail
           actualNode={nodeDataArray[nodeDataArray.findIndex((obj => obj.key == this.state.selectedNode))]}
           onNameChange={this.handleNameChange}
