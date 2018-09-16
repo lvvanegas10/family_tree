@@ -10,7 +10,7 @@ import axios from 'axios';
 import DiagramButtons from '../GTree/DiagramButtons';
 import NodeDetail from '../GTree/NodeDetail';
 
-let nodeDataArray = [
+const nodeDataArray = [
   {
     key: 0,
     n: 'You',
@@ -51,7 +51,7 @@ class GTreePanel extends Component {
 
   addParents() {
     const index = nodeDataArray.findIndex(
-      obj => obj.key == this.state.selectedNode,
+      obj => obj.key === this.state.selectedNode,
     );
     const keyNew = nodeDataArray[nodeDataArray.length - 1].key + 100;
     nodeDataArray.push({
@@ -74,7 +74,7 @@ class GTreePanel extends Component {
 
   addHusband() {
     const index = nodeDataArray.findIndex(
-      obj => obj.key == this.state.selectedNode,
+      obj => obj.key === this.state.selectedNode,
     );
     const keyNew = nodeDataArray[nodeDataArray.length - 1].key + 100;
     nodeDataArray.push({
@@ -89,7 +89,7 @@ class GTreePanel extends Component {
   }
   addWife() {
     const index = nodeDataArray.findIndex(
-      obj => obj.key == this.state.selectedNode,
+      obj => obj.key === this.state.selectedNode,
     );
     const keyNew = nodeDataArray[nodeDataArray.length - 1].key + 100;
     nodeDataArray.push({
@@ -105,12 +105,12 @@ class GTreePanel extends Component {
 
   addChildren() {
     const index = nodeDataArray.findIndex(
-      obj => obj.key == this.state.selectedNode,
+      obj => obj.key === this.state.selectedNode,
     );
     const keyNew = nodeDataArray[nodeDataArray.length - 1].key + 100;
 
-    console.log(`${nodeDataArray[index].ux  }ooooo`);
-    console.log(`${nodeDataArray[index].vir  }oooo`);
+    console.log(`${nodeDataArray[index].ux}ooooo`);
+    console.log(`${nodeDataArray[index].vir}oooo`);
 
     if (nodeDataArray[index].ux !== undefined)
       nodeDataArray.push({
@@ -173,14 +173,14 @@ class GTreePanel extends Component {
 
   getSelectedNode() {
     const index = nodeDataArray.findIndex(
-      obj => obj.key == this.state.selectedNode,
+      obj => obj.key === this.state.selectedNode,
     );
     return nodeDataArray[index];
   }
 
   handleNameChange(name) {
     const index = nodeDataArray.findIndex(
-      obj => obj.key == this.state.selectedNode,
+      obj => obj.key === this.state.selectedNode,
     );
     nodeDataArray[index].n = name;
     this.setState({ dataT: Array.from(nodeDataArray) });
@@ -188,7 +188,7 @@ class GTreePanel extends Component {
 
   handleSexChange(sex) {
     const index = nodeDataArray.findIndex(
-      obj => obj.key == this.state.selectedNode,
+      obj => obj.key === this.state.selectedNode,
     );
     nodeDataArray[index].s = sex;
     this.setState({ dataT: Array.from(nodeDataArray) });
@@ -196,7 +196,7 @@ class GTreePanel extends Component {
 
   handleDateChange(date) {
     const index = nodeDataArray.findIndex(
-      obj => obj.key == this.state.selectedNode,
+      obj => obj.key === this.state.selectedNode,
     );
     nodeDataArray[index].date = date;
     this.setState({ dataT: Array.from(nodeDataArray) });
@@ -204,7 +204,7 @@ class GTreePanel extends Component {
 
   handleColorChange(color) {
     const index = nodeDataArray.findIndex(
-      obj => obj.key == this.state.selectedNode,
+      obj => obj.key === this.state.selectedNode,
     );
     nodeDataArray[index].a = [color];
     this.setState({ dataT: Array.from(nodeDataArray) });
@@ -228,7 +228,9 @@ class GTreePanel extends Component {
         <NodeDetail
           actualNode={
             nodeDataArray[
-              nodeDataArray.findIndex(obj => obj.key == this.state.selectedNode)
+              nodeDataArray.findIndex(
+                obj => obj.key === this.state.selectedNode,
+              )
             ]
           }
           onNameChange={this.handleNameChange}

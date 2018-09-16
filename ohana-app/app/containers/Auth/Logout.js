@@ -8,7 +8,7 @@ import { Redirect } from 'react-router-dom';
 import { logout } from './actions';
 
 // Components
-import { Auth } from '../Auth';
+import Auth from './Auth';
 
 class Logout extends React.Component {
   static propTypes = {

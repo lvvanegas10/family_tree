@@ -21,10 +21,10 @@ import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import LogInPage from 'containers/LogInPage/Loadable';
 import RegisterPage from 'containers/RegisterPage/Loadable';
+import TreePage from 'containers/TreePage/Loadable';
 import { Logout } from 'containers/Auth';
 import Header from 'containers/Header';
 import Footer from 'containers/Footer';
-
 import { checkSession } from '../Auth/actions';
 
 class App extends React.Component {
@@ -49,6 +49,7 @@ class App extends React.Component {
                   <Route exact path="/login" component={LogInPage} />
                   <Route exact path="/signup" component={RegisterPage} />
                   <Route exact path="/logout" component={Logout} />
+                  <Route exact path="/my-tree" component={TreePage} />
                   <Route component={NotFoundPage} />
                 </Switch>
               </CSSTransition>
