@@ -612,7 +612,11 @@ export default class GTree extends Component {
       diagram.model.nodeDataArray = this.props.data;
       this.setupDiagram(diagram, 4);
       model.nodeDataArray = this.props.data;
-      this.setState({ myModel: model, myDiagram: diagram });
+      this.setState({ myModel: model, myDiagram: diagram }); 
+      this.props.exportTo(diagram.makeImageData({
+        type: "image/png",
+        background: "white"
+      }));     
     });
   }
 
@@ -633,6 +637,11 @@ export default class GTree extends Component {
         this.setupDiagram(diagram, 4);
         model.nodeDataArray = this.props.data;
         this.setState({ myModel: model, myDiagram: diagram });
+        this.props.exportTo(diagram.makeImageData({
+          type: "image/png",
+          background: "white"
+
+        }));
       });
     }
   }
@@ -773,7 +782,7 @@ export default class GTree extends Component {
     return (
       <div
         id="goJsDiv"
-        style={{ width: '1200px', height: '800px', backgroundColor: 'white' }}
+        style={{ width: '1200px', height: '500px', backgroundColor: 'white' }}
       />
     );
   }

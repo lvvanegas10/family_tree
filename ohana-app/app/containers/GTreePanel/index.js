@@ -20,8 +20,7 @@ const nodeDataArray = [
   },
 ];
 
-const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InJvbGUiOiJVU0VSX1JPTEUiLCJzdGF0ZSI6dHJ1ZSwiZ29vZ2xlIjpmYWxzZSwiX2lkIjoiNWI5ZWJlZWYxY2MxOWIzMTg4NWE3MjRjIiwibmFtZSI6IkxhdXJhIiwiZW1haWwiOiJ2YUBjbyIsIl9fdiI6MH0sImlhdCI6MTUzNzEzMDIzMSwiZXhwIjoxNTM3MTMyODIzfQ.laAUJGOvzP7pUOOb-4cNThDFtuNg33jvDcc2pFwT3xY';
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InJvbGUiOiJVU0VSX1JPTEUiLCJzdGF0ZSI6dHJ1ZSwiZ29vZ2xlIjpmYWxzZSwiX2lkIjoiNWI5ZWU2NTU1NzU4MzgwMDEzNWRkZjkwIiwibmFtZSI6Ikdvb3ZlcmxhYiIsImVtYWlsIjoibHYudmFuZWdhczEwQHVuaWFuZGVzLmVkdS5jbyIsIl9fdiI6MH0sImlhdCI6MTUzNzE0MzQ0NCwiZXhwIjoxNTM3MTQ2MDM2fQ.MixtR0SqNl8mJBkZ2_uBBYC7Evtd70cEMg-1DyUKuBM';
 
 /* eslint-disable react/prefer-stateless-function */
 class GTreePanel extends Component {
@@ -30,6 +29,7 @@ class GTreePanel extends Component {
     this.state = {
       dataT: nodeDataArray,
       selectedNode: 0,
+      imgData: null
     };
 
     this.addParents = this.addParents.bind(this);
@@ -43,6 +43,8 @@ class GTreePanel extends Component {
     this.handleSelectedNode = this.handleSelectedNode.bind(this);
     this.handleColorChange = this.handleColorChange.bind(this);
     this.loadTree = this.loadTree.bind(this);
+    this.getImageData = this.getImageData.bind(this);
+
   }
 
   componentDidMount() {
@@ -159,9 +161,7 @@ class GTreePanel extends Component {
         },
       })
       .then(response => {
-        console.log(response.data.trees[0].tree);
         if (response.data.trees[0].tree.length > 0) {
-          console.log('You have already a Tree');
           this.setState({ dataT: response.data.trees[0].tree });
         } else {
           console.log('new Tree');
@@ -214,9 +214,14 @@ class GTreePanel extends Component {
     this.setState({ selectedNode: node });
   }
 
+  getImageData(data){
+    this.setState({ imgData: data});
+  }
+
   render() {
-    return (
-      <div>
+    return (  
+      <div> 
+        <a download="myTree.png" href={this.state.imgData} >Download</a>
         <DiagramButtons
           key="diagramButtons"
           addParents={this.addParents.bind(this)}
@@ -228,9 +233,9 @@ class GTreePanel extends Component {
         <NodeDetail
           actualNode={
             nodeDataArray[
-              nodeDataArray.findIndex(
-                obj => obj.key === this.state.selectedNode,
-              )
+            nodeDataArray.findIndex(
+              obj => obj.key === this.state.selectedNode,
+            )
             ]
           }
           onNameChange={this.handleNameChange}
@@ -238,7 +243,7 @@ class GTreePanel extends Component {
           onDateChange={this.handleDateChange}
           onColorChange={this.handleColorChange}
         />
-        <GTree data={this.state.dataT} selectedNode={this.handleSelectedNode} />
+        <GTree data={this.state.dataT}  exportTo ={this.getImageData}  selectedNode={this.handleSelectedNode} />
       </div>
     );
   }
