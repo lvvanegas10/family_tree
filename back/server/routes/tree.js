@@ -49,7 +49,7 @@ app.post('/tree', [verificaToken], function (req, res) {
 
     let tree = new Tree({
         id,
-        tree: body.tree
+        tree: []
     });
 
     tree.save((err, treeDB) => {
@@ -80,7 +80,7 @@ app.put('/tree', [verificaToken], function (req, res) {
             return res.status(400).json({
                 ok: false,
                 err: {
-                    message: 'User not find'
+                    message: 'User not found'
                 }
             });
         }

@@ -69,7 +69,8 @@ class SignUpForm extends Component {
         message: 'Registration complete',
         description: 'You can login now!',
         placement: 'bottomRight',
-      });
+      });  
+
     } catch (error) {
       this.setState({ loading: false });
     } finally {

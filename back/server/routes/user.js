@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
 const User = require('../models/user');
+const Tree = require('../models/tree');
 
 const app = express();
 
@@ -90,6 +91,21 @@ app.post('/users', function (req, res) {
                 err
             });
         }
+
+        let tree = new Tree({
+            id: userDB._id,
+            tree: []
+        });
+
+        tree.save((err, treeDB) => {
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    err
+                });
+            }
+        });
+
         res.json({
             ok: true,
             user: userDB
