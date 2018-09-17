@@ -10,17 +10,20 @@
  */
 
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import styled from 'styled-components';
+import { Container, Segment, Header } from 'semantic-ui-react';
 
-import messages from './messages';
+const MainContainer = styled(Container)`
+  margin-top: 5em;
+  margin-bottom: 5em;
+`;
 
-/* eslint-disable react/prefer-stateless-function */
-export default class NotFound extends React.PureComponent {
-  render() {
-    return (
-      <h1>
-        <FormattedMessage {...messages.header} />
-      </h1>
-    );
-  }
-}
+export default () => (
+  <MainContainer>
+    <Segment padded="very">
+      <Header as="h1" textAlign="center">
+        404 <br /> Not found page.
+      </Header>
+    </Segment>
+  </MainContainer>
+);
