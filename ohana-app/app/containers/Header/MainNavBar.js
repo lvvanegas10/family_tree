@@ -31,6 +31,13 @@ const MainNavBar = ({ isAuthenticated }) => (
       )}
       {isAuthenticated && (
         <li className="nav-item">
+          <NavLink to="/my-timeline" activeClassName="active">
+            My Timeline
+          </NavLink>
+        </li>
+      )}
+      {isAuthenticated && (
+        <li className="nav-item">
           <NavLink to="/logout" activeClassName="active">
             Logout
           </NavLink>
