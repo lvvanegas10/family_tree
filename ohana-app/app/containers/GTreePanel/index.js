@@ -21,11 +21,6 @@ const nodeDataArray = [
   },
 ];
 
-<<<<<<< HEAD
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InJvbGUiOiJVU0VSX1JPTEUiLCJzdGF0ZSI6dHJ1ZSwiZ29vZ2xlIjpmYWxzZSwiX2lkIjoiNWI5ZWU2NTU1NzU4MzgwMDEzNWRkZjkwIiwibmFtZSI6Ikdvb3ZlcmxhYiIsImVtYWlsIjoibHYudmFuZWdhczEwQHVuaWFuZGVzLmVkdS5jbyIsIl9fdiI6MH0sImlhdCI6MTUzNzE0MzQ0NCwiZXhwIjoxNTM3MTQ2MDM2fQ.MixtR0SqNl8mJBkZ2_uBBYC7Evtd70cEMg-1DyUKuBM';
-
-=======
->>>>>>> d0b40f620594f960b464478ba49b8dbc8ee3f5b9
 /* eslint-disable react/prefer-stateless-function */
 class GTreePanel extends Component {
   static propTypes = {
