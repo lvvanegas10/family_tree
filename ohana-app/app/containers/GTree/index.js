@@ -67,18 +67,18 @@ export default class GTree extends Component {
       // consider all Nodes in the given collection
       const it = coll.iterator;
       while (it.next()) {
-        var node = it.value;
+        let node = it.value;
         if (!(node instanceof go.Node)) continue;
         if (!node.isLayoutPositioned || !node.isVisible()) continue;
         if (nonmemberonly && node.containingGroup !== null) continue;
         // if it's an unmarried Node, or if it's a Link Label Node, create a LayoutVertex for it
         if (node.isLinkLabel) {
           // get marriage Link
-          var link = node.labeledLink;
+          let link = node.labeledLink;
           const spouseA = link.fromNode;
           const spouseB = link.toNode;
           // create vertex representing both husband and wife
-          var vertex = net.addNode(node);
+          let vertex = net.addNode(node);
           // now define the vertex size to be big enough to hold both spouses
           vertex.width =
             spouseA.actualBounds.width +
@@ -96,12 +96,12 @@ export default class GTree extends Component {
           // don't add a vertex for any married person!
           // instead, code above adds label node for marriage link
           // assume a marriage Link has a label Node
-          var marriages = 0;
+          let marriages = 0;
           node.linksConnected.each(l => {
             if (l.isLabeledLink) marriages++;
           });
           if (marriages === 0) {
-            var vertex = net.addNode(node);
+            let vertex = net.addNode(node);
           } else if (marriages > 1) {
             multiSpousePeople.add(node);
           }
@@ -110,13 +110,13 @@ export default class GTree extends Component {
       // now do all Links
       it.reset();
       while (it.next()) {
-        var link = it.value;
+        let link = it.value;
         if (!(link instanceof go.Link)) continue;
         if (!link.isLayoutPositioned || !link.isVisible()) continue;
         if (nonmemberonly && link.containingGroup !== null) continue;
         // if it's a parent-child link, add a LayoutEdge for it
         if (!link.isLabeledLink) {
-          var parent = net.findVertex(link.fromNode); // should be a label node
+          let parent = net.findVertex(link.fromNode); // should be a label node
           const child = net.findVertex(link.toNode);
           if (child !== null) {
             // an unmarried child
@@ -140,13 +140,13 @@ export default class GTree extends Component {
 
       while (multiSpousePeople.count > 0) {
         // find all collections of people that are indirectly married to each other
-        var node = multiSpousePeople.first();
+        let node = multiSpousePeople.first();
         const cohort = new go.Set();
         this.extendCohort(cohort, node);
         // then encourage them all to be the same generation by connecting them all with a common vertex
-        var dummyvert = net.createVertex();
+        let dummyvert = net.createVertex();
         net.addVertex(dummyvert);
-        var marriages = new go.Set();
+        let marriages = new go.Set();
         cohort.each(n => {
           n.linksConnected.each(l => {
             marriages.add(l);
@@ -234,7 +234,7 @@ export default class GTree extends Component {
         // prefer fathers on the left, mothers on the right
         if (spouseA.data.s === 'F') {
           // sex is female
-          var temp = spouseA;
+          let temp = spouseA;
           spouseA = spouseB;
           spouseB = temp;
         }
@@ -247,7 +247,7 @@ export default class GTree extends Component {
           aParentsNode.position.x > bParentsNode.position.x
         ) {
           // swap the spouses
-          var temp = spouseA;
+          let temp = spouseA;
           spouseA = spouseB;
           spouseB = temp;
         }
@@ -257,14 +257,14 @@ export default class GTree extends Component {
           v.y,
         );
         if (spouseA.opacity === 0) {
-          var pos = new go.Point(
+          let pos = new go.Point(
             v.centerX - spouseA.actualBounds.width / 2,
             v.y,
           );
           spouseA.position = pos;
           spouseB.position = pos;
         } else if (spouseB.opacity === 0) {
-          var pos = new go.Point(
+          let pos = new go.Point(
             v.centerX - spouseB.actualBounds.width / 2,
             v.y,
           );
@@ -663,7 +663,7 @@ export default class GTree extends Component {
       // node.linksConnected.each(function(l) {
       //  if (!l.isLabeledLink) return;
       //  l.opacity = 0;
-      //  var spouse = l.getOtherNode(node);
+      //  let spouse = l.getOtherNode(node);
       //  spouse.opacity = 0;
       //  spouse.pickable = false;
       // });
@@ -696,19 +696,19 @@ export default class GTree extends Component {
       let uxs = data.ux;
       if (uxs !== undefined) {
         if (typeof uxs === 'number') uxs = [uxs];
-        for (var j = 0; j < uxs.length; j++) {
+        for (let j = 0; j < uxs.length; j++) {
           const wife = uxs[j];
           if (key === wife) {
             // or warn no reflexive marriages
             continue;
           }
-          var link = this.findMarriage(diagram, key, wife);
+          let link = this.findMarriage(diagram, key, wife);
           if (link === null) {
             // add a label node for the marriage link
-            var mlab = { s: 'LinkLabel' };
+            let mlab = { s: 'LinkLabel' };
             model.addNodeData(mlab);
             // add the marriage link itself, also referring to the label node
-            var mdata = {
+            let mdata = {
               from: key,
               to: wife,
               labelKeys: [mlab.key],
@@ -721,19 +721,19 @@ export default class GTree extends Component {
       let virs = data.vir;
       if (virs !== undefined) {
         if (typeof virs === 'number') virs = [virs];
-        for (var j = 0; j < virs.length; j++) {
+        for (let j = 0; j < virs.length; j++) {
           const husband = virs[j];
           if (key === husband) {
             // or warn no reflexive marriages
             continue;
           }
-          var link = this.findMarriage(diagram, key, husband);
+          let link = this.findMarriage(diagram, key, husband);
           if (link === null) {
             // add a label node for the marriage link
-            var mlab = { s: 'LinkLabel' };
+            let mlab = { s: 'LinkLabel' };
             model.addNodeData(mlab);
             // add the marriage link itself, also referring to the label node
-            var mdata = {
+            let mdata = {
               from: key,
               to: husband,
               labelKeys: [mlab.key],
