@@ -27,10 +27,9 @@ mongoose.set('useCreateIndex', true);
 const mongo = mongoose.connect(process.env.URLDB, { useNewUrlParser: true });
 mongo.then(() => {
   console.log('connected');
+  app.listen(process.env.PORT, () => {
+    console.log("Listening to port: ", process.env.PORT);
+  });
 }).catch((err) => {
   console.log('err', err);
-});
-
-app.listen(process.env.PORT, () => {
-  console.log("Listening to port: ", process.env.PORT);
 });
