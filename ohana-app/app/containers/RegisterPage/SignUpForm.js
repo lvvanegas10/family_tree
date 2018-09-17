@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 
-import background from 'images/login-background.jpg';
+import background from 'images/register-background.jpg';
 
 // Antd
 import Form from 'antd/lib/form';
@@ -69,8 +69,7 @@ class SignUpForm extends Component {
         message: 'Registration complete',
         description: 'You can login now!',
         placement: 'bottomRight',
-      });  
-
+      });
     } catch (error) {
       this.setState({ loading: false });
     } finally {

@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Auth } from 'containers/Auth';
 import axios from 'axios';
+import isEmpty from 'lodash/isEmpty';
+import moment from 'moment';
 
 // Antd
 import Timeline from 'antd/lib/timeline';
-import Icon from 'antd/lib/icon';
 import message from 'antd/lib/message';
 import 'antd/lib/timeline/style/index.less';
 
@@ -55,38 +56,33 @@ class MyTimeline extends React.Component {
     }
   };
 
+  sortDataTree = dataTree => {
+    dataTree.sort((a, b) => new Date(a.date) - new Date(b.date));
+    return dataTree.filter(node => !isEmpty(node.date));
+  };
+
+  renderTimeLine = dataTree =>
+    dataTree.map((node, counter) => {
+      const date = new Date(node.date);
+      console.log(date);
+      return (
+        <Timeline.Item key={counter}>{`${node.n} - ${moment(node.date).format(
+          'DD/MM/YYYY',
+        )}`}</Timeline.Item>
+      );
+    });
+
   render() {
     const { isLoading, dataTree } = this.state;
-    console.log(dataTree);
+    const dataArray = this.sortDataTree([...dataTree]);
+    console.log(dataArray);
     return (
       <Dimmer.Dimmable dimmed={isLoading} style={{ minHeight: '300px' }}>
         <Dimmer active={isLoading} inverted>
           <Loader />
         </Dimmer>
         {!isLoading && dataTree.length > 0 ? (
-          <Timeline mode="alternate">
-            <Timeline.Item>Create a services site 2015-09-01</Timeline.Item>
-            <Timeline.Item color="green">
-              Solve initial network problems 2015-09-01
-            </Timeline.Item>
-            <Timeline.Item
-              dot={<Icon type="clock-circle-o" style={{ fontSize: '16px' }} />}
-            >
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-              accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-              quae ab illo inventore veritatis et quasi architecto beatae vitae
-              dicta sunt explicabo.
-            </Timeline.Item>
-            <Timeline.Item color="red">
-              Network problems being solved 2015-09-01
-            </Timeline.Item>
-            <Timeline.Item>Create a services site 2015-09-01</Timeline.Item>
-            <Timeline.Item
-              dot={<Icon type="clock-circle-o" style={{ fontSize: '16px' }} />}
-            >
-              Technical testing 2015-09-01
-            </Timeline.Item>
-          </Timeline>
+          <Timeline mode="alternate">{this.renderTimeLine(dataArray)}</Timeline>
         ) : (
           []
         )}
