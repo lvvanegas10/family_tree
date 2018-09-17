@@ -37,13 +37,13 @@ app.get('/users/:id', function (req, res) {
 
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    
+
     let id = req.params.id;
 
     User.find({ _id: id }, 'name email role state google img')
         .exec((err, users) => {
 
-            if (users===undefined) {
+            if (users === undefined) {
                 return res.status(400).json({
                     ok: false,
                     err: {
@@ -73,6 +73,7 @@ app.post('/users', function (req, res) {
 
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+
     let body = req.body;
 
     let user = new User({

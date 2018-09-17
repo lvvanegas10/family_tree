@@ -1,26 +1,35 @@
-const express = require("express");
-const path = require("path");
-const fs = require("fs");
+const express = require('express');
+const path = require('path');
+const fs = require('fs');
 const app = express();
-const { verificaToken } = require("../middlewares/authentication");
+const { verificaToken } = require('../middlewares/authentication');
 
-app.get("/image/:key", verificaToken, (req, res) => {
-  let id = req.user._id;
-  let nodeKey = req.params.key;
-  let validExt = ["png", "jpg", "gif", "jpeg", "PNG"];
+app.get('/image/:key', verificaToken, (req, res) => {
 
-  let pathImg = `../uploads/${id}-${nodeKey}.`;
+    let id = req.user._id;
+    let nodeKey = req.params.key;
+    let validExt = ['png', 'jpg', 'gif', 'jpeg', 'PNG'];
 
-  let finalPath = path.resolve(__dirname, "../assets/default.png");
+    let pathImg = `../uploads/${id}-${nodeKey}.`;
 
-  for (ext in validExt) {
-    let pathAbsolute = path.resolve(__dirname, pathImg + validExt[ext]);
-    if (fs.existsSync(pathAbsolute)) {
-      finalPath = pathAbsolute;
+    let finalPath = path.resolve(__dirname, '../assets/default.png');
+
+    for (ext in validExt) {
+        let pathAbsolute = path.resolve(__dirname, pathImg + validExt[ext]);
+        if (fs.existsSync(pathAbsolute)) {
+            finalPath = pathAbsolute;
+        }
     }
-  }
+<<<<<<< HEAD
+    console.log(finalPath);
+=======
+>>>>>>> master
+    res.sendFile(finalPath);
 
-  res.sendFile(finalPath);
 });
 
+<<<<<<< HEAD
 module.exports = app;
+=======
+module.exports = app;
+>>>>>>> master

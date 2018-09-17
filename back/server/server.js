@@ -23,7 +23,8 @@ const path = require("path");
 app.use(express.static(path.resolve(__dirname, "../public")));
 
 mongoose.set('useCreateIndex', true);
- const mongo = mongoose.connect(process.env.URLDB, { useNewUrlParser: true });
+
+const mongo = mongoose.connect(process.env.URLDB, { useNewUrlParser: true });
 mongo.then(() => {
   console.log('connected');
 }).catch((err) => {

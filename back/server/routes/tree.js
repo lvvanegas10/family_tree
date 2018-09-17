@@ -44,11 +44,12 @@ app.post('/tree', [verificaToken], function (req, res) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
+    let body = req.body;
     let id = req.user._id;
 
     let tree = new Tree({
         id,
-        tree: []
+        tree: body.tree
     });
 
     tree.save((err, treeDB) => {
