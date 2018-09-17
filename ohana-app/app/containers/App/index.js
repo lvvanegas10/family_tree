@@ -14,6 +14,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route, withRouter } from 'react-router-dom';
+import PrivateRoute from 'components/PrivateRoute';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import { connect } from 'react-redux';
 
@@ -49,7 +50,7 @@ class App extends React.Component {
                   <Route exact path="/login" component={LogInPage} />
                   <Route exact path="/signup" component={RegisterPage} />
                   <Route exact path="/logout" component={Logout} />
-                  <Route exact path="/my-tree" component={TreePage} />
+                  <PrivateRoute exact path="/my-tree" component={TreePage} />
                   <Route component={NotFoundPage} />
                 </Switch>
               </CSSTransition>
