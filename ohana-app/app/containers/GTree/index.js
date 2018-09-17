@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import go from 'gojs';
 const goObj = go.GraphObject.make;
 
@@ -47,7 +48,7 @@ export default class GTree extends Component {
     /** @override */
     GenogramLayout.prototype.makeNetwork = function(coll) {
       // generate LayoutEdges for each parent-child Link
-      let net = this.createNetwork();
+      const net = this.createNetwork();
       if (coll instanceof go.Diagram) {
         this.add(net, coll.nodes, true);
         this.add(net, coll.links, true);
@@ -62,9 +63,9 @@ export default class GTree extends Component {
     // internal method for creating LayeredDigraphNetwork where husband/wife pairs are represented
     // by a single LayeredDigraphVertex corresponding to the label Node on the marriage Link
     GenogramLayout.prototype.add = function(net, coll, nonmemberonly) {
-      let multiSpousePeople = new go.Set();
+      const multiSpousePeople = new go.Set();
       // consider all Nodes in the given collection
-      let it = coll.iterator;
+      const it = coll.iterator;
       while (it.next()) {
         var node = it.value;
         if (!(node instanceof go.Node)) continue;
@@ -74,8 +75,8 @@ export default class GTree extends Component {
         if (node.isLinkLabel) {
           // get marriage Link
           var link = node.labeledLink;
-          let spouseA = link.fromNode;
-          let spouseB = link.toNode;
+          const spouseA = link.fromNode;
+          const spouseB = link.toNode;
           // create vertex representing both husband and wife
           var vertex = net.addNode(node);
           // now define the vertex size to be big enough to hold both spouses
@@ -96,7 +97,7 @@ export default class GTree extends Component {
           // instead, code above adds label node for marriage link
           // assume a marriage Link has a label Node
           var marriages = 0;
-          node.linksConnected.each((l) => {
+          node.linksConnected.each(l => {
             if (l.isLabeledLink) marriages++;
           });
           if (marriages === 0) {
@@ -116,19 +117,19 @@ export default class GTree extends Component {
         // if it's a parent-child link, add a LayoutEdge for it
         if (!link.isLabeledLink) {
           var parent = net.findVertex(link.fromNode); // should be a label node
-          let child = net.findVertex(link.toNode);
+          const child = net.findVertex(link.toNode);
           if (child !== null) {
             // an unmarried child
             net.linkVertexes(parent, child, link);
           } else {
             // a married child
-            link.toNode.linksConnected.each((l) => {
+            link.toNode.linksConnected.each(l => {
               if (!l.isLabeledLink) return; // if it has no label node, it's a parent-child link
               // found the Marriage Link, now get its label Node
-              var mlab = l.labelNodes.first();
+              const mlab = l.labelNodes.first();
               // parent-child link should connect with the label node,
               // so the LayoutEdge should connect with the LayoutVertex representing the label node
-              var mlabvert = net.findVertex(mlab);
+              const mlabvert = net.findVertex(mlab);
               if (mlabvert !== null) {
                 net.linkVertexes(parent, mlabvert, link);
               }
@@ -140,21 +141,21 @@ export default class GTree extends Component {
       while (multiSpousePeople.count > 0) {
         // find all collections of people that are indirectly married to each other
         var node = multiSpousePeople.first();
-        let cohort = new go.Set();
+        const cohort = new go.Set();
         this.extendCohort(cohort, node);
         // then encourage them all to be the same generation by connecting them all with a common vertex
         var dummyvert = net.createVertex();
         net.addVertex(dummyvert);
         var marriages = new go.Set();
-        cohort.each((n) => {
-          n.linksConnected.each(function(l) {
+        cohort.each(n => {
+          n.linksConnected.each(l => {
             marriages.add(l);
           });
         });
-        marriages.each((link) => {
+        marriages.each(link => {
           // find the vertex for the marriage link (i.e. for the label node)
-          var mlab = link.labelNodes.first();
-          var v = net.findVertex(mlab);
+          const mlab = link.labelNodes.first();
+          const v = net.findVertex(mlab);
           if (v !== null) {
             net.linkVertexes(dummyvert, v, null);
           }
@@ -168,8 +169,8 @@ export default class GTree extends Component {
     GenogramLayout.prototype.extendCohort = function(coll, node) {
       if (coll.contains(node)) return;
       coll.add(node);
-      let lay = this;
-      node.linksConnected.each((l) => {
+      const lay = this;
+      node.linksConnected.each(l => {
         if (l.isLabeledLink) {
           // if it's a marriage link, continue with both spouses
           lay.extendCohort(coll, l.fromNode);
@@ -181,21 +182,21 @@ export default class GTree extends Component {
     /** @override */
     GenogramLayout.prototype.assignLayers = function() {
       go.LayeredDigraphLayout.prototype.assignLayers.call(this);
-      let horiz = this.direction == 0.0 || this.direction == 180.0;
+      const horiz = this.direction == 0.0 || this.direction == 180.0;
       // for every vertex, record the maximum vertex width or height for the vertex's layer
-      let maxsizes = [];
-      this.network.vertexes.each((v) => {
-        var lay = v.layer;
-        var max = maxsizes[lay];
+      const maxsizes = [];
+      this.network.vertexes.each(v => {
+        const lay = v.layer;
+        let max = maxsizes[lay];
         if (max === undefined) max = 0;
-        var sz = horiz ? v.width : v.height;
+        const sz = horiz ? v.width : v.height;
         if (sz > max) maxsizes[lay] = sz;
       });
       // now make sure every vertex has the maximum width or height according to which layer it is in,
       // and aligned on the left (if horizontal) or the top (if vertical)
-      this.network.vertexes.each((v) => {
-        var lay = v.layer;
-        var max = maxsizes[lay];
+      this.network.vertexes.each(v => {
+        const lay = v.layer;
+        const max = maxsizes[lay];
         if (horiz) {
           v.focus = new go.Point(0, v.height / 2);
           v.width = max;
@@ -212,24 +213,24 @@ export default class GTree extends Component {
     GenogramLayout.prototype.commitNodes = function() {
       go.LayeredDigraphLayout.prototype.commitNodes.call(this);
       // position regular nodes
-      this.network.vertexes.each((v) => {
+      this.network.vertexes.each(v => {
         if (v.node !== null && !v.node.isLinkLabel) {
           v.node.position = new go.Point(v.x, v.y);
         }
       });
       // position the spouses of each marriage vertex
-      let layout = this;
-      this.network.vertexes.each((v) => {
+      const layout = this;
+      this.network.vertexes.each(v => {
         if (v.node === null) return;
         if (!v.node.isLinkLabel) return;
-        var labnode = v.node;
-        var lablink = labnode.labeledLink;
+        const labnode = v.node;
+        const lablink = labnode.labeledLink;
         // In case the spouses are not actually moved, we need to have the marriage link
         // position the label node, because LayoutVertex.commit() was called above on these vertexes.
         // Alternatively we could override LayoutVetex.commit to be a no-op for label node vertexes.
         lablink.invalidateRoute();
-        var spouseA = lablink.fromNode;
-        var spouseB = lablink.toNode;
+        let spouseA = lablink.fromNode;
+        let spouseB = lablink.toNode;
         // prefer fathers on the left, mothers on the right
         if (spouseA.data.s === 'F') {
           // sex is female
@@ -238,8 +239,8 @@ export default class GTree extends Component {
           spouseB = temp;
         }
         // see if the parents are on the desired sides, to avoid a link crossing
-        var aParentsNode = layout.findParentsMarriageLabelNode(spouseA);
-        var bParentsNode = layout.findParentsMarriageLabelNode(spouseB);
+        const aParentsNode = layout.findParentsMarriageLabelNode(spouseA);
+        const bParentsNode = layout.findParentsMarriageLabelNode(spouseB);
         if (
           aParentsNode !== null &&
           bParentsNode !== null &&
@@ -272,23 +273,19 @@ export default class GTree extends Component {
         }
       });
       // position only-child nodes to be under the marriage label node
-      this.network.vertexes.each((v) => {
+      this.network.vertexes.each(v => {
         if (v.node === null || v.node.linksConnected.count > 1) return;
-        var mnode = layout.findParentsMarriageLabelNode(v.node);
+        const mnode = layout.findParentsMarriageLabelNode(v.node);
         if (mnode !== null && mnode.linksConnected.count === 1) {
           // if only one child
-          var mvert = layout.network.findVertex(mnode);
-          var newbnds = v.node.actualBounds.copy();
+          const mvert = layout.network.findVertex(mnode);
+          const newbnds = v.node.actualBounds.copy();
           newbnds.x = mvert.centerX - v.node.actualBounds.width / 2;
           // see if there's any empty space at the horizontal mid-point in that layer
-          var overlaps = layout.diagram.findObjectsIn(
+          const overlaps = layout.diagram.findObjectsIn(
             newbnds,
-            function(x) {
-              return x.part;
-            },
-            function(p) {
-              return p !== v.node;
-            },
+            x => x.part,
+            p => p !== v.node,
             true,
           );
           if (overlaps.count === 0) {
@@ -299,9 +296,9 @@ export default class GTree extends Component {
     };
 
     GenogramLayout.prototype.findParentsMarriageLabelNode = function(node) {
-      let it = node.findNodesInto();
+      const it = node.findNodesInto();
       while (it.next()) {
-        let n = it.value;
+        const n = it.value;
         if (n.isLinkLabel) return n;
       }
       return null;
@@ -385,11 +382,11 @@ export default class GTree extends Component {
 
     // determine the geometry for each attribute shape in a male;
     // except for the slash these are all squares at each of the four corners of the overall square
-    let tlsq = go.Geometry.parse('F M1 1 l19 0 0 19 -19 0z');
-    let trsq = go.Geometry.parse('F M20 1 l19 0 0 19 -19 0z');
-    let brsq = go.Geometry.parse('F M20 20 l19 0 0 19 -19 0z');
-    let blsq = go.Geometry.parse('F M1 20 l19 0 0 19 -19 0z');
-    let slash = go.Geometry.parse('F M38 0 L40 0 40 2 2 40 0 40 0 38z');
+    const tlsq = go.Geometry.parse('F M1 1 l19 0 0 19 -19 0z');
+    const trsq = go.Geometry.parse('F M20 1 l19 0 0 19 -19 0z');
+    const brsq = go.Geometry.parse('F M20 20 l19 0 0 19 -19 0z');
+    const blsq = go.Geometry.parse('F M1 20 l19 0 0 19 -19 0z');
+    const slash = go.Geometry.parse('F M38 0 L40 0 40 2 2 40 0 40 0 38z');
     function maleGeometry(a) {
       switch (a) {
         case '#f44336':
@@ -435,10 +432,10 @@ export default class GTree extends Component {
 
     // determine the geometry for each attribute shape in a female;
     // except for the slash these are all pie shapes at each of the four quadrants of the overall circle
-    let tlarc = go.Geometry.parse('F M20 20 B 180 90 20 20 19 19 z');
-    let trarc = go.Geometry.parse('F M20 20 B 270 90 20 20 19 19 z');
-    let brarc = go.Geometry.parse('F M20 20 B 0 90 20 20 19 19 z');
-    let blarc = go.Geometry.parse('F M20 20 B 90 90 20 20 19 19 z');
+    const tlarc = go.Geometry.parse('F M20 20 B 180 90 20 20 19 19 z');
+    const trarc = go.Geometry.parse('F M20 20 B 270 90 20 20 19 19 z');
+    const brarc = go.Geometry.parse('F M20 20 B 0 90 20 20 19 19 z');
+    const blarc = go.Geometry.parse('F M20 20 B 90 90 20 20 19 19 z');
     function femaleGeometry(a) {
       switch (a) {
         case '#f44336':
@@ -659,7 +656,7 @@ export default class GTree extends Component {
     this.setupMarriages(diagram);
     this.setupParents(diagram);
 
-    let node = diagram.findNodeForKey(focusId);
+    const node = diagram.findNodeForKey(focusId);
     if (node !== null) {
       diagram.select(node);
       // remove any spouse for the person under focus:
@@ -675,12 +672,12 @@ export default class GTree extends Component {
 
   findMarriage(diagram, a, b) {
     // A and B are node keys
-    let nodeA = diagram.findNodeForKey(a);
-    let nodeB = diagram.findNodeForKey(b);
+    const nodeA = diagram.findNodeForKey(a);
+    const nodeB = diagram.findNodeForKey(b);
     if (nodeA !== null && nodeB !== null) {
-      let it = nodeA.findLinksBetween(nodeB); // in either direction
+      const it = nodeA.findLinksBetween(nodeB); // in either direction
       while (it.next()) {
-        let link = it.value;
+        const link = it.value;
         // Link.data.category === "Marriage" means it's a marriage relationship
         if (link.data !== null && link.data.category === 'Marriage')
           return link;
@@ -691,16 +688,16 @@ export default class GTree extends Component {
 
   // now process the node data to determine marriages
   setupMarriages(diagram) {
-    let model = diagram.model;
-    let nodeDataArray = model.nodeDataArray;
+    const model = diagram.model;
+    const nodeDataArray = model.nodeDataArray;
     for (let i = 0; i < nodeDataArray.length; i++) {
-      let data = nodeDataArray[i];
-      let key = data.key;
+      const data = nodeDataArray[i];
+      const key = data.key;
       let uxs = data.ux;
       if (uxs !== undefined) {
         if (typeof uxs === 'number') uxs = [uxs];
         for (var j = 0; j < uxs.length; j++) {
-          let wife = uxs[j];
+          const wife = uxs[j];
           if (key === wife) {
             // or warn no reflexive marriages
             continue;
@@ -725,7 +722,7 @@ export default class GTree extends Component {
       if (virs !== undefined) {
         if (typeof virs === 'number') virs = [virs];
         for (var j = 0; j < virs.length; j++) {
-          let husband = virs[j];
+          const husband = virs[j];
           if (key === husband) {
             // or warn no reflexive marriages
             continue;
@@ -751,24 +748,24 @@ export default class GTree extends Component {
 
   // process parent-child relationships once all marriages are known
   setupParents(diagram) {
-    let model = diagram.model;
-    let nodeDataArray = model.nodeDataArray;
+    const model = diagram.model;
+    const nodeDataArray = model.nodeDataArray;
     for (let i = 0; i < nodeDataArray.length; i++) {
-      let data = nodeDataArray[i];
-      let key = data.key;
-      let mother = data.m;
-      let father = data.f;
+      const data = nodeDataArray[i];
+      const key = data.key;
+      const mother = data.m;
+      const father = data.f;
       if (mother !== undefined && father !== undefined) {
-        let link = this.findMarriage(diagram, mother, father);
+        const link = this.findMarriage(diagram, mother, father);
         if (link === null) {
           // or warn no known mother or no known father or no known marriage between them
           if (window.console)
-            window.console.log(`unknown marriage: ${  mother  } & ${  father}`);
+            window.console.log(`unknown marriage: ${mother} & ${father}`);
           continue;
         }
-        let mdata = link.data;
-        let mlabkey = mdata.labelKeys[0];
-        let cdata = { from: mlabkey, to: key };
+        const mdata = link.data;
+        const mlabkey = mdata.labelKeys[0];
+        const cdata = { from: mlabkey, to: key };
         model.addLinkData(cdata);
       }
     }
@@ -788,5 +785,5 @@ export default class GTree extends Component {
   }
 }
 
-GTree.propTypes = { data: React.PropTypes.string.isRequired };
+GTree.propTypes = { data: PropTypes.string.isRequired };
 GTree.defaultProps = { data: '[]' };

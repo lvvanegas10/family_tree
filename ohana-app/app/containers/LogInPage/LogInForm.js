@@ -69,7 +69,7 @@ class LoginPage extends Component {
         },
       );
       const expirationTime = new Date(Date.now());
-      expirationTime.setMinutes(expirationTime.getMinutes() + 5);
+      expirationTime.setDate(expirationTime.getDate() + 1);
       localStorage.setItem('token', token);
       localStorage.setItem('expirationTime', expirationTime);
       this.props.authSuccess(token, user);
