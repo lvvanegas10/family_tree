@@ -20,16 +20,11 @@ app.get('/image/:key', verificaToken, (req, res) => {
             finalPath = pathAbsolute;
         }
     }
-<<<<<<< HEAD
-    console.log(finalPath);
-=======
->>>>>>> master
+
     res.sendFile(finalPath);
 
 });
 
-<<<<<<< HEAD
 module.exports = app;
-=======
-module.exports = app;
->>>>>>> master
+
+ 
