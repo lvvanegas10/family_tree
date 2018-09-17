@@ -1,25 +1,21 @@
 import React, { Component } from 'react';
-//import DatePicker from 'react-datepicker';
+// import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 import { CirclePicker } from 'react-color';
 
-//Style
+// Style
 import Input from 'antd/lib/input';
 import Select from 'antd/lib/select';
-const Option = Select.Option;
 
 import DatePicker from 'antd/lib/date-picker';
-import 'antd/lib/select/style/index.less'
-import 'antd/lib/date-picker/style/index.less'
+import 'antd/lib/select/style/index.less';
+import 'antd/lib/date-picker/style/index.less';
 import 'antd/lib/form/style/index.less';
 import 'antd/lib/input/style/index.less';
 import 'antd/lib/button/style/index.less';
 import 'antd/lib/spin/style/index.less';
-
-
-
-
+const Option = Select.Option;
 
 class NodeDetail extends Component {
   constructor(props) {
@@ -88,8 +84,8 @@ class NodeDetail extends Component {
   }
 
   setStartDate(date) {
-    let dateObj = new Date(date);
-    let momentObj = moment(dateObj);
+    const dateObj = new Date(date);
+    const momentObj = moment(dateObj);
     return momentObj;
   }
 
@@ -104,11 +100,17 @@ class NodeDetail extends Component {
           onChange={this.handleNameChange}
         />
 
-        <Select onChange={this.handleSexChange}
+        <Select
+          onChange={this.handleSexChange}
           defaultValue={this.props.actualNode.s}
-          className="element-panel" >
-          <Option key="M" value="M">Male</Option>
-          <Option key="F" value="F">Female</Option>
+          className="element-panel"
+        >
+          <Option key="M" value="M">
+            Male
+          </Option>
+          <Option key="F" value="F">
+            Female
+          </Option>
         </Select>
 
         <DatePicker
@@ -123,7 +125,6 @@ class NodeDetail extends Component {
             onChange={this.handleColorChange}
           />
         </div>
-
       </div>
     );
   }

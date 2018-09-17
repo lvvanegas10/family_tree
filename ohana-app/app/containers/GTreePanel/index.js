@@ -8,19 +8,21 @@ import React, { Component } from 'react';
 import GTree from 'containers/GTree';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import DiagramButtons from '../GTree/DiagramButtons';
-import NodeDetail from '../GTree/NodeDetail';
 
-
-// Style 
-import Form from 'antd/lib/form';
-import message from 'antd/lib/message'
-import 'antd/lib/message/style/index.less'
+// Style
+import Button from 'antd/lib/button';
+import message from 'antd/lib/message';
+import 'antd/lib/message/style/index.less';
 import 'antd/lib/form/style/index.less';
 import 'antd/lib/input/style/index.less';
 import 'antd/lib/button/style/index.less';
 import 'antd/lib/spin/style/index.less';
 
+// Semantic
+import { Grid } from 'semantic-ui-react';
+
+import DiagramButtons from '../GTree/DiagramButtons';
+import NodeDetail from '../GTree/NodeDetail';
 
 const nodeDataArray = [
   {
@@ -43,7 +45,7 @@ class GTreePanel extends Component {
     this.state = {
       dataT: nodeDataArray,
       selectedNode: 0,
-      imgData: null
+      imgData: null,
     };
 
     this.addParents = this.addParents.bind(this);
@@ -58,7 +60,6 @@ class GTreePanel extends Component {
     this.handleColorChange = this.handleColorChange.bind(this);
     this.loadTree = this.loadTree.bind(this);
     this.getImageData = this.getImageData.bind(this);
-
   }
 
   componentDidMount() {
@@ -165,7 +166,7 @@ class GTreePanel extends Component {
           },
         },
       )
-      .then(response =>  message.info('Tree save'));
+      .then(response => message.info('Tree save'));
   }
 
   loadTree() {
@@ -185,7 +186,8 @@ class GTreePanel extends Component {
           console.log('new Tree');
           this.setState({ dataT: nodeDataArray });
         }
-      }).catch(err => {
+      })
+      .catch(err => {
         console.log(err);
       });
   }
@@ -239,35 +241,45 @@ class GTreePanel extends Component {
 
   render() {
     return (
-      <div id="container-tree">
-        <div id="panel">
-          <a download="myTree.png" href={this.state.imgData} >Download</a>
-          <NodeDetail
-            actualNode={
-              nodeDataArray[
-              nodeDataArray.findIndex(
-                obj => obj.key === this.state.selectedNode,
-              )
-              ]
-            }
-            onNameChange={this.handleNameChange}
-            onSexChange={this.handleSexChange}
-            onDateChange={this.handleDateChange}
-            onColorChange={this.handleColorChange}
-          />
-          <DiagramButtons
-            key="diagramButtons"
-            addParents={this.addParents.bind(this)}
-            addHusband={this.addHusband.bind(this)}
-            addWife={this.addWife.bind(this)}
-            addChildren={this.addChildren.bind(this)}
-            saveTree={this.saveTree.bind(this)}
-          />                   
-        </div>
-        <div id="tree">
-        <GTree data={this.state.dataT} exportTo={this.getImageData} selectedNode={this.handleSelectedNode} />
-        </div>
-      </div>
+      <Grid stackable columns="equal" stretched>
+        <Grid.Row>
+          <Grid.Column width={4}>
+            <Button type="primary">
+              <a download="myTree.png" href={this.state.imgData}>
+                Download
+              </a>
+            </Button>
+            <NodeDetail
+              actualNode={
+                nodeDataArray[
+                  nodeDataArray.findIndex(
+                    obj => obj.key === this.state.selectedNode,
+                  )
+                ]
+              }
+              onNameChange={this.handleNameChange}
+              onSexChange={this.handleSexChange}
+              onDateChange={this.handleDateChange}
+              onColorChange={this.handleColorChange}
+            />
+            <DiagramButtons
+              key="diagramButtons"
+              addParents={this.addParents.bind(this)}
+              addHusband={this.addHusband.bind(this)}
+              addWife={this.addWife.bind(this)}
+              addChildren={this.addChildren.bind(this)}
+              saveTree={this.saveTree.bind(this)}
+            />
+          </Grid.Column>
+          <Grid.Column width={12}>
+            <GTree
+              data={this.state.dataT}
+              exportTo={this.getImageData}
+              selectedNode={this.handleSelectedNode}
+            />
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     );
   }
 }

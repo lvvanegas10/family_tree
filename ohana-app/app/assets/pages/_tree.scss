@@ -1,24 +1,45 @@
-#tree{
-    width: 70%;
-    float: right;
-    margin: 30px;
+#container-tree {
+  position: relative;
+  display: flex;
+  justify-content: stretch;
+  align-items: stretch;
 }
 
-#panel{
-    width: 20%;
-    float: left;
-    margin: 30px;
-    margin-right: 0;
-    display: block;
-    justify-content: center;
+.div-form {
+  margin-top: 1em !important;
 }
 
-.element-panel{
-    width: 100%;
-    margin: 5px !important ;    
+#tree {
+  width: 70%;
+  margin: 30px;
 }
 
-#color-content{
-    display: flex;
-    justify-content: center;
+#panel {
+  width: 20%;
+  margin: 30px;
+  margin-right: 0;
+  display: block;
+  justify-content: center;
+}
+
+.element-panel {
+  width: 100%;
+  margin-top: 1em !important;
+}
+
+#color-content {
+  display: flex;
+  justify-content: center;
+
+  .circle-picker {
+    width: 100% !important;
+    margin: 0 !important;
+    margin-top: 1em !important;
+
+    >span {
+      >div {
+        margin: .3em !important;
+      }
+    }
+  }
 }

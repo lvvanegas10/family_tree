@@ -5,27 +5,26 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
+import styled from 'styled-components';
+import { Container, Segment, Header } from 'semantic-ui-react';
+import Timeline from './Timeline';
+
+const MainContainer = styled(Container)`
+  margin-top: 6em;
+  margin-bottom: 6em;
+`;
 
 function TimelinePage() {
-  return <div />;
+  return (
+    <MainContainer>
+      <Segment textAlign="center" basic>
+        <Header as="h1">My Timeline</Header>
+      </Segment>
+      <Segment basic>
+        <Timeline />
+      </Segment>
+    </MainContainer>
+  );
 }
 
-TimelinePage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-};
-
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch,
-  };
-}
-
-const withConnect = connect(
-  null,
-  mapDispatchToProps,
-);
-
-export default compose(withConnect)(TimelinePage);
+export default TimelinePage;

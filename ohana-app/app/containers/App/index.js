@@ -23,6 +23,7 @@ import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import LogInPage from 'containers/LogInPage/Loadable';
 import RegisterPage from 'containers/RegisterPage/Loadable';
 import TreePage from 'containers/TreePage/Loadable';
+import TimelinePage from 'containers/TimelinePage/Loadable';
 import { Logout } from 'containers/Auth';
 import Header from 'containers/Header';
 import Footer from 'containers/Footer';
@@ -51,6 +52,11 @@ class App extends React.Component {
                   <Route exact path="/signup" component={RegisterPage} />
                   <Route exact path="/logout" component={Logout} />
                   <PrivateRoute exact path="/my-tree" component={TreePage} />
+                  <PrivateRoute
+                    exact
+                    path="/my-timeline"
+                    component={TimelinePage}
+                  />
                   <Route component={NotFoundPage} />
                 </Switch>
               </CSSTransition>
