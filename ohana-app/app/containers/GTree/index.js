@@ -779,7 +779,6 @@ export default class GTree extends Component {
     return (
       <div
         id="goJsDiv"
-        style={{ width: '1200px', height: '500px', backgroundColor: 'white' }}
       />
     );
   }

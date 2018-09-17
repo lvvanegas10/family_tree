@@ -3,8 +3,15 @@
 // -----------------------------------------------------------------------------
 
 footer {
-  background-color: rgba($dark-blue, 1);
+  background-color: rgba($dark-blue, 1); 
+  position: fixed;
+  height: 50px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  margin-bottom: 0px;
 }
+
 
 .navbar.foot-nav {
   position: relative;

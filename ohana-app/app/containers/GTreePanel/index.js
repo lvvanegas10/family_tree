@@ -170,9 +170,10 @@ class GTreePanel extends Component {
           this.setState({ dataT: response.data.trees[0].tree });
         } else {
           console.log('new Tree');
-
           this.setState({ dataT: nodeDataArray });
         }
+      }).catch(err =>{
+        console.log(err);
       });
   }
 
@@ -225,7 +226,8 @@ class GTreePanel extends Component {
 
   render() {
     return (  
-      <div> 
+      <div id="container-tree"> 
+        <div id="panel">
         <a download="myTree.png" href={this.state.imgData} >Download</a>
         <DiagramButtons
           key="diagramButtons"
@@ -248,6 +250,7 @@ class GTreePanel extends Component {
           onDateChange={this.handleDateChange}
           onColorChange={this.handleColorChange}
         />
+        </div>
         <GTree data={this.state.dataT}  exportTo ={this.getImageData}  selectedNode={this.handleSelectedNode} />
       </div>
     );
