@@ -1,8 +1,25 @@
 import React, { Component } from 'react';
-import DatePicker from 'react-datepicker';
+//import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 import { CirclePicker } from 'react-color';
+
+//Style
+import Input from 'antd/lib/input';
+import Select from 'antd/lib/select';
+const Option = Select.Option;
+
+import DatePicker from 'antd/lib/date-picker';
+import 'antd/lib/select/style/index.less'
+import 'antd/lib/date-picker/style/index.less'
+import 'antd/lib/form/style/index.less';
+import 'antd/lib/input/style/index.less';
+import 'antd/lib/button/style/index.less';
+import 'antd/lib/spin/style/index.less';
+
+
+
+
 
 class NodeDetail extends Component {
   constructor(props) {
@@ -22,8 +39,8 @@ class NodeDetail extends Component {
     this.props.onNameChange(event.target.value);
   }
 
-  handleSexChange(event) {
-    this.props.onSexChange(event.target.value);
+  handleSexChange(value) {
+    this.props.onSexChange(value);
   }
 
   handleColorChange(color, event) {
@@ -79,25 +96,34 @@ class NodeDetail extends Component {
   render() {
     return (
       <div>
-        <form>
-          <input
-            type="text"
-            value={this.props.actualNode.n}
-            onChange={this.handleNameChange}
+        <Input
+          className="element-panel"
+          placeholder="Basic usage"
+          type="text"
+          value={this.props.actualNode.n}
+          onChange={this.handleNameChange}
+        />
+
+        <Select onChange={this.handleSexChange}
+          defaultValue={this.props.actualNode.s}
+          className="element-panel" >
+          <Option key="M" value="M">Male</Option>
+          <Option key="F" value="F">Female</Option>
+        </Select>
+
+        <DatePicker
+          className="element-panel"
+          selected={this.setStartDate(this.props.actualNode.date)}
+          onChange={this.handleDateChange}
+        />
+
+        <div id="color-content">
+          <CirclePicker
+            className="element-panel"
+            onChange={this.handleColorChange}
           />
-          <select
-            onChange={this.handleSexChange}
-            defaultValue={this.props.actualNode.s}
-          >
-            <option value="M">Male</option>
-            <option value="F">Female</option>
-          </select>
-          <DatePicker
-            selected={this.setStartDate(this.props.actualNode.date)}
-            onChange={this.handleDateChange}
-          />
-          <CirclePicker onChange={this.handleColorChange} />
-        </form>
+        </div>
+
       </div>
     );
   }
