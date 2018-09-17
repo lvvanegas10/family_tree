@@ -50,7 +50,6 @@ class MyTimeline extends React.Component {
       }
     } catch (error) {
       console.log(error.response);
-      message.error('An error has ocurred. Please, try again.');
     } finally {
       this.setState({ isLoading: false });
     }
@@ -88,7 +87,7 @@ class MyTimeline extends React.Component {
         )}
         {!isLoading && dataTree.length === 0 ? (
           <Segment basic padded="very" textAlign="center">
-            <Header as="h1">Not there is family tree yet</Header>
+            <Header as="h1">There's not a family tree created</Header>
           </Segment>
         ) : (
           []

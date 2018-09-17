@@ -86,7 +86,7 @@ class LoginPage extends Component {
     const { getFieldDecorator } = this.props.form;
     const { loading } = this.state;
     if (isAuthenticated) {
-      return <Redirect to="/" />;
+      return <Redirect to="/my-tree" />;
     }
     return (
       <div className="login-page">

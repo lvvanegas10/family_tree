@@ -166,7 +166,7 @@ class GTreePanel extends Component {
           },
         },
       )
-      .then(response => message.info('Tree save'));
+      .then(response => message.success('Tree saved'));
   }
 
   loadTree() {
