@@ -7,6 +7,7 @@
 import React, { Component } from 'react';
 import GTree from 'containers/GTree';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import DiagramButtons from '../GTree/DiagramButtons';
 import NodeDetail from '../GTree/NodeDetail';
 
@@ -20,11 +21,12 @@ const nodeDataArray = [
   },
 ];
 
-const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InJvbGUiOiJVU0VSX1JPTEUiLCJzdGF0ZSI6dHJ1ZSwiZ29vZ2xlIjpmYWxzZSwiX2lkIjoiNWI5ZWJlZWYxY2MxOWIzMTg4NWE3MjRjIiwibmFtZSI6IkxhdXJhIiwiZW1haWwiOiJ2YUBjbyIsIl9fdiI6MH0sImlhdCI6MTUzNzEzMDIzMSwiZXhwIjoxNTM3MTMyODIzfQ.laAUJGOvzP7pUOOb-4cNThDFtuNg33jvDcc2pFwT3xY';
-
 /* eslint-disable react/prefer-stateless-function */
 class GTreePanel extends Component {
+  static propTypes = {
+    token: PropTypes.string.isRequired,
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -136,6 +138,7 @@ class GTreePanel extends Component {
 
   saveTree() {
     console.log('Saving...');
+    const { token } = this.props;
     axios
       .put(
         'https://back-p2.herokuapp.com/tree',
@@ -152,6 +155,7 @@ class GTreePanel extends Component {
   }
 
   loadTree() {
+    const { token } = this.props;
     axios
       .get('https://back-p2.herokuapp.com/tree', {
         headers: {
