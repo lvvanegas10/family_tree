@@ -13,7 +13,7 @@ The main objective of this project is to develop a web page that allows people t
 * Run npm start
 
 ### Frontend 
-* Go to *ohana_app* folder and run npm install
+* Go to *ohana-app* folder and run npm install
 * run npm start
 * Open your browser in http://localhost:3000
 
