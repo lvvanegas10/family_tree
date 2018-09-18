@@ -7,14 +7,17 @@ const app = express();
 
 const { verificaToken, verificaAdmin_Role } = require('../middlewares/authentication')
 
+// I advise you to use the correct convention of a conditional statement. Use if, else if and else instead of making the returns.
+// Use that for the get, the put and the post.
+
 app.get('/tree', [verificaToken], function (req, res) {
 
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
     Tree.find({ id: req.user._id }, 'tree')
-        .exec((err, trees) => {
-
+        .exec((err, trees) => { 
+        
             if (trees === undefined) {
                 return res.status(400).json({
                     ok: false,
