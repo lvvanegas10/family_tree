@@ -47,6 +47,7 @@ app.post('/tree', [verificaToken], function (req, res) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
+    // I don´t understand why you ask for a body in the request if you do not use it later.
     let body = req.body;
     let id = req.user._id;
 
